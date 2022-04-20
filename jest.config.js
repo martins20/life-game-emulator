@@ -8,12 +8,9 @@ module.exports = {
     clearMocks: true,
     collectCoverage: true,
     collectCoverageFrom: [
-        "<rootDir>/src/modules/**/*.ts",
-        "<rootDir>/src/shared/modules/**/*.ts",
-        "<rootDir>/src/shared/utils/**/*.ts",
+        "<rootDir>/src/**/*.ts",
         "!<rootDir>/src/**/dtos/*",
         "!<rootDir>/src/**/repositories/**",
-        "!<rootDir>/src/**/contract/**",
         "!<rootDir>/src/**/test/**",
     ],
     coverageDirectory: "coverage",
