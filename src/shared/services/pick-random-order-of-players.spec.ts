@@ -1,4 +1,4 @@
-import { Player } from "@shared/entities/player";
+import { Player } from "@modules/player/entities/Player";
 
 import { PickRandomOrderOfPlayersService as SUT } from "./pick-random-order-of-players";
 

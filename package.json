@@ -37,7 +37,9 @@
   },
   "dependencies": {
     "jest": "^27.5.1",
+    "reflect-metadata": "^0.1.13",
     "supertest": "^6.2.2",
-    "ts-jest": "^27.1.4"
+    "ts-jest": "^27.1.4",
+    "tsyringe": "^4.6.0"
   }
 }

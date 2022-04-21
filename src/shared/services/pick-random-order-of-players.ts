@@ -1,4 +1,4 @@
-import { Player } from "@shared/entities/player";
+import { Player } from "@modules/player/entities/Player";
 
 export class PickRandomOrderOfPlayersService {
   callsCounter = 0;
