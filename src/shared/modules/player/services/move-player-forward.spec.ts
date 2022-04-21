@@ -45,6 +45,7 @@ describe("MovePlayerForwardService", () => {
     expect(movedPlayer).toMatchObject({
       ...player,
       position: player.position + steps,
+      turn_counter: 0,
     });
   });
 

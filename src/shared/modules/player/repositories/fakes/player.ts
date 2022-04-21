@@ -1,3 +1,5 @@
+import { MAX_GAME_BUILDINGS } from "@modules/game/constants/max-game-buildings";
+
 import { Player } from "@shared/modules/player/entities/Player";
 import { IncreasePlayerBalanceDTO } from "@shared/modules/player/dtos/increase-player-balance";
 import { DecreasePlayerBalanceDTO } from "@shared/modules/player/dtos/decrease-player-balance";
@@ -76,7 +78,13 @@ export class FakePlayerRepository implements PlayerRepositoryContract {
   }: MovePlayerForwardDTO): Promise<Player> {
     const updatedPlayers = this.players.map((data) =>
       data.id === player_id
-        ? { ...data, position: data.position + steps }
+        ? {
+            ...data,
+            position: data.position + steps,
+            turn_counter: Math.floor(
+              (data.position + steps) / MAX_GAME_BUILDINGS
+            ),
+          }
         : data
     );
 
