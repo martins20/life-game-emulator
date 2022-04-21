@@ -1,5 +1,6 @@
 import { CreatePlayerTypeService as Sut } from "./create-player-type";
 import { FakePlayerTypeRepository } from "../repositories/fakes/player-type";
+import { PlayerTypeErrors } from "../errors/player-type";
 import { CreatePlayerTypeDTO } from "../dtos/create-player-type";
 
 let sut: Sut;
@@ -24,9 +25,10 @@ describe("CreatePlayerTypeService", () => {
   });
 
   it("Should not be able to create a new player type if player type name already exists", async () => {
-    const playerType = await sut.execute(playerTypeData);
+    await fakePlayerTypeRepository.create(playerTypeData);
 
-    expect(playerType).toHaveProperty("id");
-    expect(playerType).toMatchObject(playerTypeData);
+    await expect(sut.execute(playerTypeData)).rejects.toBeInstanceOf(
+      PlayerTypeErrors.PlayerTypeNameAlreadyExistsError
+    );
   });
 });
