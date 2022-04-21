@@ -2,7 +2,7 @@ import { PlayerCategoryRepositoryContract } from "../contract/player-category-re
 import { PlayerCategory } from "../../entities/PlayerCategory";
 import { CreatePlayerCategoryDTO } from "../../dtos/create-player-category";
 
-export class InMemoryPlayerTypeRepository
+export class InMemoryPlayerCategoryRepository
   implements PlayerCategoryRepositoryContract
 {
   private playerTypes: PlayerCategory[] = [];
