@@ -21,11 +21,11 @@ export class SetPropertyOwnerService {
 
     if (!foundPropertyById) throw new PropertyErrors.PropertyNotExistsError();
 
-    if (foundPropertyById.owner_id)
+    if (foundPropertyById.owner?.name)
       throw new PropertyErrors.PropertyAlreadyHasOwnerError();
 
     const updatedPropertyWithOwner =
-      await this.propertiesRepository.setPropertyOwnerId(data);
+      await this.propertiesRepository.setPropertyOwner(data);
 
     return updatedPropertyWithOwner;
   }

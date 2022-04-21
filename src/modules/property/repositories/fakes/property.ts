@@ -39,12 +39,12 @@ export class FakePropertyRepository implements PropertyRepositoryContract {
     return foundProperty;
   }
 
-  async setPropertyOwnerId({
+  async setPropertyOwner({
     property_id,
-    owner_id,
+    owner,
   }: SetPropertyOwnerDTO): Promise<Property> {
     const updatedPropertyWithOwner = this.properties.map((data) =>
-      data.id === property_id ? { ...data, owner_id } : data
+      data.id === property_id ? { ...data, owner } : data
     );
 
     this.properties = updatedPropertyWithOwner;

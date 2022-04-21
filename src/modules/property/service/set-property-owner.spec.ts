@@ -1,3 +1,5 @@
+import { Player } from "@modules/player/entities/Player";
+
 import { SetPropertyOwnerService as Sut } from "./set-property-owner";
 import { FakePropertyRepository } from "../repositories/fakes/property";
 import { PropertyErrors } from "../errors/property";
@@ -33,15 +35,15 @@ describe("SetPropertyOwnerService", () => {
     property = await sutSpy.createProperty(propertyData);
   });
 
-  const owner_id = "some-player-id";
+  const owner = new Player("some-player");
 
   it("Should be able to set a property owner", async () => {
     const propertyWithOwner = await sut.execute({
       property_id: property.id,
-      owner_id,
+      owner,
     });
 
-    expect(propertyWithOwner).toMatchObject({ ...propertyData, owner_id });
+    expect(propertyWithOwner).toMatchObject({ ...propertyData, owner });
   });
 
   it("Should not be able to set a property owner with a non existent property", async () => {
@@ -50,21 +52,21 @@ describe("SetPropertyOwnerService", () => {
     await expect(
       sut.execute({
         property_id: nonExistentPropertyId,
-        owner_id,
+        owner,
       })
     ).rejects.toBeInstanceOf(PropertyErrors.PropertyNotExistsError);
   });
 
   it("Should not be able to set a property owner in properties of already has owner", async () => {
-    await fakePropertyRepository.setPropertyOwnerId({
-      owner_id,
+    await fakePropertyRepository.setPropertyOwner({
+      owner,
       property_id: property.id,
     });
 
     await expect(
       sut.execute({
         property_id: property.id,
-        owner_id,
+        owner,
       })
     ).rejects.toBeInstanceOf(PropertyErrors.PropertyAlreadyHasOwnerError);
   });

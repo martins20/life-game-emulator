@@ -6,5 +6,5 @@ export interface PropertyRepositoryContract {
   create: (data: CreatePropertyDTO) => Promise<Property>;
   findByPropertyName: (name: Property["name"]) => Promise<Property | undefined>;
   findById: (propertyID: Property["id"]) => Promise<Property | undefined>;
-  setPropertyOwnerId: (data: SetPropertyOwnerDTO) => Promise<Property>;
+  setPropertyOwner: (data: SetPropertyOwnerDTO) => Promise<Property>;
 }
