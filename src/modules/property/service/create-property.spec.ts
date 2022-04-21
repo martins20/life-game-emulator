@@ -33,4 +33,12 @@ describe("CreatePropertyService", () => {
       PropertyErrors.PropertyAlreadyExistsError
     );
   });
+
+  it("Should not be able to create a new property with 'sale_cost' equal to 0", async () => {
+    await expect(
+      sut.execute({ ...propertyData, sale_cost: 0 })
+    ).rejects.toBeInstanceOf(
+      PropertyErrors.CannotCreatePropertyWithInvalidSaleCostError
+    );
+  });
 });

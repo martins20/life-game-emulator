@@ -8,4 +8,12 @@ export namespace PropertyErrors {
       super(message);
     }
   }
+
+  export class CannotCreatePropertyWithInvalidSaleCostError extends ApiError {
+    constructor() {
+      const message = "'sale_cost' must be greater than 0";
+
+      super(message);
+    }
+  }
 }

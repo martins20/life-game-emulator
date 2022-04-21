@@ -9,4 +9,13 @@ describe("PropertyErrors", () => {
       expect(error.statusCode).toBe(400);
     }
   });
+
+  it("Should to return a error message ''sale_cost' must be greater than 0' status code equals to 400", () => {
+    try {
+      throw new PropertyErrors.CannotCreatePropertyWithInvalidSaleCostError();
+    } catch (error: any) {
+      expect(error.message).toBe("'sale_cost' must be greater than 0");
+      expect(error.statusCode).toBe(400);
+    }
+  });
 });

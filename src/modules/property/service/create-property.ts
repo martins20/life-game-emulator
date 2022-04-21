@@ -13,6 +13,13 @@ export class CreatePropertyService {
   ) {}
 
   async execute(data: CreatePropertyDTO): Promise<Property> {
+    const { sale_cost } = data;
+
+    const isValidSaleCost = sale_cost;
+
+    if (!isValidSaleCost)
+      throw new PropertyErrors.CannotCreatePropertyWithInvalidSaleCostError();
+
     const foundPropertyByName =
       await this.propertiesRepository.findByPropertyName(data.name);
 
