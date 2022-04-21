@@ -19,6 +19,11 @@ export class MovePlayerForwardService {
 
     if (!foundPlayerById) throw new PlayerErrors.PlayerNotExistsError();
 
+    const isValidStep = data.steps < 0;
+
+    if (isValidStep)
+      throw new PlayerErrors.StepsMustBeGreaterOrEqualToZeroError();
+
     const movedPlayerPosition = await this.playersRepository.moveForward(data);
 
     return movedPlayerPosition;

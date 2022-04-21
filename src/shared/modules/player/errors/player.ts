@@ -25,4 +25,12 @@ export namespace PlayerErrors {
       super(message);
     }
   }
+
+  export class StepsMustBeGreaterOrEqualToZeroError extends ApiError {
+    constructor() {
+      const message = "Steps must be greater or equal to 0";
+
+      super(message);
+    }
+  }
 }

@@ -27,4 +27,13 @@ describe("PlayerErrors", () => {
       expect(error.statusCode).toBe(400);
     }
   });
+
+  it("Should to return a error message 'Steps must be greater or equal to 0' status code equals to 400", () => {
+    try {
+      throw new PlayerErrors.StepsMustBeGreaterOrEqualToZeroError();
+    } catch (error: any) {
+      expect(error.message).toBe("Steps must be greater or equal to 0");
+      expect(error.statusCode).toBe(400);
+    }
+  });
 });

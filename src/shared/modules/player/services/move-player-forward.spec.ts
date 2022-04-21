@@ -47,4 +47,10 @@ describe("MovePlayerForwardService", () => {
       position: player.position + steps,
     });
   });
+
+  it("Should not be able to move player with steps less than 0", async () => {
+    await expect(
+      sut.execute({ player_id: player.id, steps: -1 })
+    ).rejects.toBeInstanceOf(PlayerErrors.StepsMustBeGreaterOrEqualToZeroError);
+  });
 });
