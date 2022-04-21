@@ -1,5 +1,6 @@
 import { Player } from "@modules/player/entities/Player";
 import { IncreasePlayerBalanceDTO } from "@modules/player/dtos/increase-player-balance";
+import { DecreasePlayerBalanceDTO } from "@modules/player/dtos/decrease-player-balance";
 import { CreatePlayerDTO } from "@modules/player/dtos/create-player";
 
 import { PlayerRepositoryContract } from "../contract/player-repository";
@@ -35,12 +36,28 @@ export class FakePlayerRepository implements PlayerRepositoryContract {
     return foundPlayer;
   }
 
-  async updatePlayerBalance({
+  async increasePlayerBalance({
     player_id,
     value,
   }: IncreasePlayerBalanceDTO): Promise<Player> {
     const updatedPlayers = this.players.map((data) =>
       data.id === player_id ? { ...data, balance: data.balance + value } : data
+    );
+
+    this.players = updatedPlayers;
+
+    const updatedPlayer = await this.findById(player_id);
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return updatedPlayer!;
+  }
+
+  async decreasePlayerBalance({
+    player_id,
+    value,
+  }: DecreasePlayerBalanceDTO): Promise<Player> {
+    const updatedPlayers = this.players.map((data) =>
+      data.id === player_id ? { ...data, balance: data.balance - value } : data
     );
 
     this.players = updatedPlayers;
