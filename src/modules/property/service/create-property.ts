@@ -15,7 +15,7 @@ export class CreatePropertyService {
   async execute(data: CreatePropertyDTO): Promise<Property> {
     const { sale_cost } = data;
 
-    const isValidSaleCost = sale_cost;
+    const isValidSaleCost = sale_cost > 0;
 
     if (!isValidSaleCost)
       throw new PropertyErrors.CannotCreatePropertyWithInvalidSaleCostError();
