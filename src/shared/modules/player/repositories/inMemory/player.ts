@@ -4,6 +4,7 @@ import { DecreasePlayerBalanceDTO } from "@shared/modules/player/dtos/decrease-p
 import { CreatePlayerDTO } from "@shared/modules/player/dtos/create-player";
 
 import { PlayerRepositoryContract } from "../contract/player-repository";
+import { MovePlayerForwardDTO } from "../../dtos/move-player-forward";
 
 export class InMemoryPlayerRepository implements PlayerRepositoryContract {
   private players: Player[] = [];
@@ -58,6 +59,24 @@ export class InMemoryPlayerRepository implements PlayerRepositoryContract {
   }: DecreasePlayerBalanceDTO): Promise<Player> {
     const updatedPlayers = this.players.map((data) =>
       data.id === player_id ? { ...data, balance: data.balance - value } : data
+    );
+
+    this.players = updatedPlayers;
+
+    const updatedPlayer = await this.findById(player_id);
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return updatedPlayer!;
+  }
+
+  async moveForward({
+    player_id,
+    steps,
+  }: MovePlayerForwardDTO): Promise<Player> {
+    const updatedPlayers = this.players.map((data) =>
+      data.id === player_id
+        ? { ...data, position: data.position + steps }
+        : data
     );
 
     this.players = updatedPlayers;

@@ -19,6 +19,8 @@ export class MovePlayerForwardService {
 
     if (!foundPlayerById) throw new PlayerErrors.PlayerNotExistsError();
 
-    return {} as Player;
+    const movedPlayerPosition = await this.playersRepository.moveForward(data);
+
+    return movedPlayerPosition;
   }
 }
