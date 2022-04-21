@@ -16,7 +16,7 @@ export class CreatePropertyService {
     const { sale_cost, rent_cost, name } = data;
 
     const isValidSaleCost = sale_cost > 0;
-    const isValidRentCost = rent_cost;
+    const isValidRentCost = rent_cost > 0;
 
     if (!isValidSaleCost)
       throw new PropertyErrors.CannotCreatePropertyWithInvalidSaleCostError();
