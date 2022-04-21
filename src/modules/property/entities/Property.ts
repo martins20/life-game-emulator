@@ -7,7 +7,7 @@ export class Property {
   name: string;
   sale_cost: number;
   rent_cost: number;
-  owner?: Player["name"];
+  owner_id?: Player["name"];
 
   constructor(data: CreatePropertyDTO) {
     Object.assign(this, data);

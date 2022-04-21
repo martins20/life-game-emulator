@@ -24,4 +24,13 @@ export namespace PropertyErrors {
       super(message);
     }
   }
+
+  export class PropertyNotExistsError extends ApiError {
+    constructor() {
+      const message = "Property not exists";
+      const statusCode = 404;
+
+      super(message, statusCode);
+    }
+  }
 }

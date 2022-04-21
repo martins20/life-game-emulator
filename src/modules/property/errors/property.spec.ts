@@ -27,4 +27,13 @@ describe("PropertyErrors", () => {
       expect(error.statusCode).toBe(400);
     }
   });
+
+  it("Should to return a error message 'Property not exists' status code equals to 404", () => {
+    try {
+      throw new PropertyErrors.PropertyNotExistsError();
+    } catch (error: any) {
+      expect(error.message).toBe("Property not exists");
+      expect(error.statusCode).toBe(404);
+    }
+  });
 });

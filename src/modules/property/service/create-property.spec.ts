@@ -23,6 +23,7 @@ describe("CreatePropertyService", () => {
     const property = await sut.execute(propertyData);
 
     expect(property).toHaveProperty("id");
+    expect(property.owner_id).toBeFalsy();
     expect(property).toMatchObject(propertyData);
   });
 
