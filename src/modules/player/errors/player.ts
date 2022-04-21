@@ -17,4 +17,12 @@ export namespace PlayerErrors {
       super(message, statusCode);
     }
   }
+
+  export class PlayerNameIsRequiredError extends ApiError {
+    constructor() {
+      const message = "Player name is required";
+
+      super(message);
+    }
+  }
 }

@@ -13,6 +13,8 @@ export class CreatePlayerService {
   ) {}
 
   async execute(data: CreatePlayerDTO): Promise<Player> {
+    if (!data.name) throw new PlayerErrors.PlayerNameIsRequiredError();
+
     const foundPlayerWithSameName =
       await this.playersRepository.findByPlayerName(data.name);
 

@@ -32,4 +32,10 @@ describe("CreatePlayerService", () => {
       PlayerErrors.PlayerAlreadyExistsError
     );
   });
+
+  it("Should not be able to create a player with an empty name", async () => {
+    await expect(
+      sut.execute({ ...playerData, name: "" })
+    ).rejects.toBeInstanceOf(PlayerErrors.PlayerNameIsRequiredError);
+  });
 });
