@@ -1,9 +1,9 @@
-import { PlayerType } from "./PlayerType";
-import { CreatePlayerTypeDTO } from "../dtos/create-player-type";
+import { PlayerCategory } from "./PlayerCategory";
+import { CreatePlayerCategoryDTO } from "../dtos/create-player-category";
 import { BuyPropertyCondictionsParamDTO } from "../dtos/buy-property-condictions-param";
 
-const makePlayerType = (data: CreatePlayerTypeDTO): PlayerType => {
-  const character = new PlayerType(data);
+const makePlayerCategory = (data: CreatePlayerCategoryDTO): PlayerCategory => {
+  const character = new PlayerCategory(data);
 
   return character;
 };
@@ -17,21 +17,21 @@ const mockBuyPropertyCondictionResponseCallback = ({
   return shouldPlayerBuyProperty;
 };
 
-describe("PlayerType entity", () => {
-  const characterData: CreatePlayerTypeDTO = {
-    name: "player-type-test",
+describe("PlayerCategory entity", () => {
+  const characterData: CreatePlayerCategoryDTO = {
+    name: "player-category-test",
     buyPropertyCondictionResponseCallback:
       mockBuyPropertyCondictionResponseCallback,
   };
 
-  it("Should creates a player type", () => {
-    const playerType = makePlayerType(characterData);
+  it("Should creates a player category", () => {
+    const playerType = makePlayerCategory(characterData);
 
     expect(playerType).toMatchObject(characterData);
   });
 
   it("Should return 'buyPropertyCondictionResponseCallback' response by running it", () => {
-    makePlayerType(characterData);
+    makePlayerCategory(characterData);
 
     const response = mockBuyPropertyCondictionResponseCallback({
       player_balance: 10,
