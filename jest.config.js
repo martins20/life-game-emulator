@@ -11,6 +11,7 @@ module.exports = {
         "<rootDir>/src/**/*.ts",
         "!<rootDir>/src/**/dtos/*",
         "!<rootDir>/src/**/repositories/**",
+        "!<rootDir>/src/**/entities/**",
         "!<rootDir>/src/**/test/**",
     ],
     coverageDirectory: "coverage",

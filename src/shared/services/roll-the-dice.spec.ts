@@ -7,10 +7,11 @@ describe("RollTheDice", () => {
     sut = new SUT();
   });
 
-  it("Should be able to generate a random number between 0 and 1", () => {
+  it("Should be able to generate a random number between 0 and 1.", () => {
     const randomNumber = sut.execute();
 
     expect(randomNumber).toBeGreaterThanOrEqual(1);
     expect(randomNumber).toBeLessThanOrEqual(6);
+    expect(sut.callsCounter).toBe(1);
   });
 });
