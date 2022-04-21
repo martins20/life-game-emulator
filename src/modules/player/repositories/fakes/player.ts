@@ -4,7 +4,7 @@ import { CreatePlayerDTO } from "@modules/player/dtos/create-player";
 import { PlayerRepositoryContract } from "../contract/player-repository";
 
 export class FakePlayerRepository implements PlayerRepositoryContract {
-  players: Player[] = [];
+  private players: Player[] = [];
 
   async create(data: CreatePlayerDTO): Promise<Player> {
     const createdPlayer = new Player(data.name);
@@ -16,5 +16,15 @@ export class FakePlayerRepository implements PlayerRepositoryContract {
     this.players.push(createdPlayer);
 
     return createdPlayer;
+  }
+
+  async findByPlayerName(name: Player["name"]): Promise<Player | undefined> {
+    const lowerCaseName = name.toLocaleLowerCase();
+
+    const foundPlayer = this.players.find(
+      (data) => data.name.toLocaleLowerCase() === lowerCaseName
+    );
+
+    return foundPlayer;
   }
 }

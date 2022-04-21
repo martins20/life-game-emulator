@@ -1,5 +1,6 @@
 import { CreatePlayerService as Sut } from "./create-player";
 import { FakePlayerRepository } from "../repositories/fakes/player";
+import { PlayerErrors } from "../errors/player";
 import { CreatePlayerDTO } from "../dtos/create-player";
 
 let sut: Sut;
@@ -22,5 +23,13 @@ describe("CreatePlayerService", () => {
     expect(player).toMatchObject({
       name: playerData.name,
     });
+  });
+
+  it("Should not be able to create a player with an exitent name", async () => {
+    await fakePlayerRepository.create(playerData);
+
+    await expect(sut.execute(playerData)).rejects.toBeInstanceOf(
+      PlayerErrors.PlayerAlreadyExistsError
+    );
   });
 });
