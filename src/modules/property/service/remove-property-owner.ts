@@ -19,6 +19,11 @@ export class RemovePropertyOwnerService {
 
     if (!foundPropertyById) throw new PropertyErrors.PropertyNotExistsError();
 
-    return {} as Property;
+    const propertyWithOwner =
+      await this.fakePropertiesRepository.removePropertyByOwner({
+        property_id,
+      });
+
+    return propertyWithOwner;
   }
 }

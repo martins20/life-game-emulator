@@ -1,5 +1,6 @@
 import { Property } from "@modules/property/entities/Property";
 import { SetPropertyOwnerDTO } from "@modules/property/dtos/set-property-owner";
+import { RemovePropertyOwnerDTO } from "@modules/property/dtos/remove-property-owner";
 import { CreatePropertyDTO } from "@modules/property/dtos/create-property";
 
 import { PropertyRepositoryContract } from "../contract/property-repository";
@@ -53,5 +54,20 @@ export class InMemoryPropertyRepository implements PropertyRepositoryContract {
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return propertyWithOwner!;
+  }
+
+  async removePropertyByOwner({
+    property_id,
+  }: RemovePropertyOwnerDTO): Promise<Property> {
+    const updatedPropertyWithoutOwner = this.properties.map((data) =>
+      data.id === property_id ? { ...data, owner: null } : data
+    );
+
+    this.properties = updatedPropertyWithoutOwner;
+
+    const propertyWithoutOwner = await this.findById(property_id);
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return propertyWithoutOwner!;
   }
 }
