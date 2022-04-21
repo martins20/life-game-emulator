@@ -1,4 +1,4 @@
-import { CreatePlayerTypeService as Sut } from "./create-characteristic";
+import { CreatePlayerTypeService as Sut } from "./create-player-type";
 import { FakePlayerTypeRepository } from "../repositories/fakes/player-type";
 import { CreatePlayerTypeDTO } from "../dtos/create-player-type";
 
@@ -12,11 +12,18 @@ describe("CreatePlayerTypeService", () => {
   });
 
   const playerTypeData: CreatePlayerTypeDTO = {
-    name: "payer-type-test",
+    name: "player-type-test",
     buyPropertyCondictionResponseCallback: jest.fn(),
   };
 
   it("Should be able to creates a new player type", async () => {
+    const playerType = await sut.execute(playerTypeData);
+
+    expect(playerType).toHaveProperty("id");
+    expect(playerType).toMatchObject(playerTypeData);
+  });
+
+  it("Should not be able to create a new player type if player type name already exists", async () => {
     const playerType = await sut.execute(playerTypeData);
 
     expect(playerType).toHaveProperty("id");
