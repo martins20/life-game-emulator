@@ -7,6 +7,7 @@ let sut: SUT;
 const makeRandomPlayers = (): Player[] => {
   const players = Array.from({ length: Math.floor(Math.random() * 2) + 2 }).map(
     (_, index) => ({
+      id: String(index),
       name: `player ${index + 1}`,
       balance: 300,
     })

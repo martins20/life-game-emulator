@@ -9,4 +9,13 @@ describe("PlayerErrors", () => {
       expect(error.statusCode).toBe(400);
     }
   });
+
+  it("Should to return a error message 'Player not exists' status code equals to 404", () => {
+    try {
+      throw new PlayerErrors.PlayerNotExistsError();
+    } catch (error: any) {
+      expect(error.message).toBe("Player not exists");
+      expect(error.statusCode).toBe(404);
+    }
+  });
 });
