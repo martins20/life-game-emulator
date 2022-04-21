@@ -16,4 +16,12 @@ export namespace PropertyErrors {
       super(message);
     }
   }
+
+  export class CannotCreatePropertyWithInvalidRentCostError extends ApiError {
+    constructor() {
+      const message = "'rent_cost' must be greater than 0";
+
+      super(message);
+    }
+  }
 }

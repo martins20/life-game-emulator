@@ -13,15 +13,19 @@ export class CreatePropertyService {
   ) {}
 
   async execute(data: CreatePropertyDTO): Promise<Property> {
-    const { sale_cost } = data;
+    const { sale_cost, rent_cost, name } = data;
 
     const isValidSaleCost = sale_cost > 0;
+    const isValidRentCost = rent_cost;
 
     if (!isValidSaleCost)
       throw new PropertyErrors.CannotCreatePropertyWithInvalidSaleCostError();
 
+    if (!isValidRentCost)
+      throw new PropertyErrors.CannotCreatePropertyWithInvalidRentCostError();
+
     const foundPropertyByName =
-      await this.propertiesRepository.findByPropertyName(data.name);
+      await this.propertiesRepository.findByPropertyName(name);
 
     if (foundPropertyByName)
       throw new PropertyErrors.PropertyAlreadyExistsError();

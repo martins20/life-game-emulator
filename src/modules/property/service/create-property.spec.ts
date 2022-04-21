@@ -49,4 +49,12 @@ describe("CreatePropertyService", () => {
       PropertyErrors.CannotCreatePropertyWithInvalidSaleCostError
     );
   });
+
+  it("Should not be able to create a new property with 'rent_cost' equal than 0", async () => {
+    await expect(
+      sut.execute({ ...propertyData, rent_cost: 0 })
+    ).rejects.toBeInstanceOf(
+      PropertyErrors.CannotCreatePropertyWithInvalidRentCostError
+    );
+  });
 });
