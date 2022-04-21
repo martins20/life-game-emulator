@@ -10,6 +10,7 @@ const makeRandomPlayers = (): Player[] => {
       id: String(index),
       name: `player ${index + 1}`,
       balance: 300,
+      position: 0,
       category: null,
     })
   );

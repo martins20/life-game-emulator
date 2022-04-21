@@ -4,6 +4,7 @@ import { DEFAULT_PLAYER_BALANCE } from "@shared/constants/default-player-balance
 export class Player {
   id: string;
   balance: number;
+  position = 0;
 
   category: PlayerCategory | null = null;
 
