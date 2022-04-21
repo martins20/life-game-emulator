@@ -17,4 +17,16 @@ export class InMemoryPropertyRepository implements PropertyRepositoryContract {
 
     return createdProperty;
   }
+
+  async findByPropertyName(
+    name: Property["name"]
+  ): Promise<Property | undefined> {
+    const lowerCaseName = name.toLocaleLowerCase();
+
+    const foundProperty = this.properties.find(
+      (data) => data.name.toLocaleLowerCase() === lowerCaseName
+    );
+
+    return foundProperty;
+  }
 }

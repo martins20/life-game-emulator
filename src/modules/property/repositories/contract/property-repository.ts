@@ -3,4 +3,5 @@ import { CreatePropertyDTO } from "@modules/property/dtos/create-property";
 
 export interface PropertyRepositoryContract {
   create: (data: CreatePropertyDTO) => Promise<Property>;
+  findByPropertyName: (name: Property["name"]) => Promise<Property | undefined>;
 }
