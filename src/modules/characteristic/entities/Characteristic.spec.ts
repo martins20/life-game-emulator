@@ -1,5 +1,6 @@
 import { Characteristic } from "./Characteristic";
 import { CreateCharacterDTO } from "../dtos/create-character";
+import { BuyPropertyCondictionsParamDTO } from "../dtos/buy-property-condictions-param";
 
 const makeCharacteristic = (data: CreateCharacterDTO): Characteristic => {
   const character = new Characteristic(data);
@@ -7,7 +8,14 @@ const makeCharacteristic = (data: CreateCharacterDTO): Characteristic => {
   return character;
 };
 
-const mockBuyPropertyCondictionResponseCallback = jest.fn();
+const mockBuyPropertyCondictionResponseCallback = ({
+  player_balance,
+  sale_cost,
+}: BuyPropertyCondictionsParamDTO): boolean => {
+  const shouldPlayerBuyProperty = player_balance > sale_cost;
+
+  return shouldPlayerBuyProperty;
+};
 
 describe("Characteristic entity", () => {
   const characterData: CreateCharacterDTO = {
@@ -25,11 +33,11 @@ describe("Characteristic entity", () => {
   it("Should return 'buyPropertyCondictionResponseCallback' response by running it", () => {
     makeCharacteristic(characterData);
 
-    mockBuyPropertyCondictionResponseCallback.mockImplementationOnce(
-      () => true
-    );
-
-    const response = mockBuyPropertyCondictionResponseCallback();
+    const response = mockBuyPropertyCondictionResponseCallback({
+      player_balance: 10,
+      sale_cost: 1,
+      rent_value: 1,
+    });
 
     expect(response).toBeTruthy();
   });
