@@ -1,5 +1,5 @@
 import { BuyPropertyCondictionsParamDTO } from "./buy-property-condictions-param";
 
-export type BuyPropertyCondictionResponseCallback = (
+export type BuyPropertyCondictionResponseCallbackDTO = (
   data: BuyPropertyCondictionsParamDTO
 ) => boolean;
