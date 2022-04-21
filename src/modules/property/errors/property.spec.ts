@@ -36,4 +36,13 @@ describe("PropertyErrors", () => {
       expect(error.statusCode).toBe(404);
     }
   });
+
+  it("Should to return a error message 'Property already has owner' status code equals to 400", () => {
+    try {
+      throw new PropertyErrors.PropertyAlreadyHasOwnerError();
+    } catch (error: any) {
+      expect(error.message).toBe("Property already has owner");
+      expect(error.statusCode).toBe(400);
+    }
+  });
 });

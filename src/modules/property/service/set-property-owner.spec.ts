@@ -54,4 +54,18 @@ describe("SetPropertyOwnerService", () => {
       })
     ).rejects.toBeInstanceOf(PropertyErrors.PropertyNotExistsError);
   });
+
+  it("Should not be able to set a property owner in properties of already has owner", async () => {
+    await fakePropertyRepository.setPropertyOwnerId({
+      owner_id,
+      property_id: property.id,
+    });
+
+    await expect(
+      sut.execute({
+        property_id: property.id,
+        owner_id,
+      })
+    ).rejects.toBeInstanceOf(PropertyErrors.PropertyAlreadyHasOwnerError);
+  });
 });

@@ -33,4 +33,12 @@ export namespace PropertyErrors {
       super(message, statusCode);
     }
   }
+
+  export class PropertyAlreadyHasOwnerError extends ApiError {
+    constructor() {
+      const message = "Property already has owner";
+
+      super(message);
+    }
+  }
 }

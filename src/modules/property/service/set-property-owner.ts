@@ -21,6 +21,9 @@ export class SetPropertyOwnerService {
 
     if (!foundPropertyById) throw new PropertyErrors.PropertyNotExistsError();
 
+    if (foundPropertyById.owner_id)
+      throw new PropertyErrors.PropertyAlreadyHasOwnerError();
+
     const updatedPropertyWithOwner =
       await this.propertiesRepository.setPropertyOwnerId(data);
 
