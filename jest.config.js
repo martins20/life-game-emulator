@@ -16,6 +16,7 @@ module.exports = {
         "!<rootDir>/src/**/containers/**",
         "!<rootDir>/src/shared/index.ts",
         "!<rootDir>/src/shared/Server.ts",
+        "!<rootDir>/src/shared/routes/*.ts",
     ],
     coverageDirectory: "coverage",
     coveragePathIgnorePatterns: ["/node_modules/"],
