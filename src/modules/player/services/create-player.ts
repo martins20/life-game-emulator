@@ -8,18 +8,18 @@ import { CreatePlayerDTO } from "../dtos/create-player";
 @injectable()
 export class CreatePlayerService {
   constructor(
-    @inject("PlayerRepository")
-    private playerRepository: PlayerRepositoryContract
+    @inject("PlayersRepository")
+    private playersRepository: PlayerRepositoryContract
   ) {}
 
   async execute(data: CreatePlayerDTO): Promise<Player> {
     const foundPlayerWithSameName =
-      await this.playerRepository.findByPlayerName(data.name);
+      await this.playersRepository.findByPlayerName(data.name);
 
     if (foundPlayerWithSameName)
       throw new PlayerErrors.PlayerAlreadyExistsError();
 
-    const player = await this.playerRepository.create(data);
+    const player = await this.playersRepository.create(data);
 
     return player;
   }
