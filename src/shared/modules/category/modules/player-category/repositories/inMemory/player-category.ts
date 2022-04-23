@@ -11,7 +11,6 @@ export class InMemoryPlayerCategoryRepository
     const playerType = new PlayerCategory(data);
 
     Object.assign(playerType, {
-      ...data,
       id: String(Date.now() + this.playerTypes.length + 1),
     });
 

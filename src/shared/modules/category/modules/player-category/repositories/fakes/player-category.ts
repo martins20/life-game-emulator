@@ -11,7 +11,6 @@ export class FakePlayerCategoryRepository
     const playerType = new PlayerCategory(data);
 
     Object.assign(playerType, {
-      ...data,
       id: String(Date.now() + this.playerTypes.length + 1),
     });
 

@@ -10,7 +10,6 @@ export class FakeBoardRepository implements BoardRepositoryContract {
     const board = new Board(data);
 
     Object.assign(board, {
-      ...board,
       id: String(Date.now() * this.boards.length + 1),
     });
 

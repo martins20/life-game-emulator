@@ -15,7 +15,6 @@ export class FakePlayerRepository implements PlayerRepositoryContract {
     const createdPlayer = new Player(data.name);
 
     Object.assign(createdPlayer, {
-      ...createdPlayer,
       id: String(Date.now() * this.players.length + 1),
     });
 
