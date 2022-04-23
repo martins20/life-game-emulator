@@ -21,6 +21,9 @@ export class CreateBoardService {
 
     if (!hasBoardBuildings)
       throw new BoardErrors.CannotCreateBoardWithoutBuildingsError();
-    return {} as Board;
+
+    const board = this.boardsRepository.create(data);
+
+    return board;
   }
 }
