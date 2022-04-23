@@ -41,4 +41,13 @@ export namespace PropertyErrors {
       super(message);
     }
   }
+
+  export class PropertiesNotExistsError extends ApiError {
+    constructor(property_ids: string[]) {
+      const message = `Properties [${property_ids}] not exists`;
+
+      const statusCode = 404;
+      super(message, statusCode);
+    }
+  }
 }

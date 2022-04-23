@@ -2,7 +2,7 @@ import { Property } from "@shared/modules/property/entities/Property";
 import { Player } from "@shared/modules/player/entities/Player";
 
 import { Board } from "./Board";
-import { CreateBoardDTO } from "../dtos/create-board";
+import { CreateBoardEntityDTO } from "../dtos/create-board-entity";
 
 describe("Board entity", () => {
   const player = new Player("Jonh Doe");
@@ -12,7 +12,7 @@ describe("Board entity", () => {
     sale_cost: 100,
   });
 
-  const boardData: CreateBoardDTO = {
+  const boardData: CreateBoardEntityDTO = {
     buildings: [building],
     players: [player],
   };
