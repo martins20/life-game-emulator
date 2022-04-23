@@ -19,6 +19,20 @@ describe("PlayerErrors", () => {
     }
   });
 
+  it("Should to return a error message 'Players [some-player-id-1, some-player-id-2] not exists' status code equals to 404", () => {
+    try {
+      throw new PlayerErrors.PlayersNotExistsError([
+        "some-player-id-1",
+        "some-player-id-2",
+      ]);
+    } catch (error: any) {
+      expect(error.message).toBe(
+        "Players [some-player-id-1,some-player-id-2] not exists"
+      );
+      expect(error.statusCode).toBe(404);
+    }
+  });
+
   it("Should to return a error message 'Player name is required' status code equals to 400", () => {
     try {
       throw new PlayerErrors.PlayerNameIsRequiredError();

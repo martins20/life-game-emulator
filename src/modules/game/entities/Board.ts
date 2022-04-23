@@ -1,7 +1,7 @@
 import { Property } from "@shared/modules/property/entities/Property";
 import { Player } from "@shared/modules/player/entities/Player";
 
-import { CreateBoardDTO } from "../dtos/create-board";
+import { CreateBoardEntityDTO } from "../dtos/create-board-entity";
 
 export class Board {
   id: string;
@@ -9,7 +9,7 @@ export class Board {
   buildings: Property[];
   players: Player[];
 
-  constructor(data: CreateBoardDTO) {
+  constructor(data: CreateBoardEntityDTO) {
     Object.assign(this, data);
   }
 }

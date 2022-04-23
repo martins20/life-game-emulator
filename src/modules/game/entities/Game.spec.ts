@@ -4,7 +4,7 @@ import { Player } from "@shared/modules/player/entities/Player";
 import { Game } from "./Game";
 import { Board } from "./Board";
 import { CreateGameDTO } from "../dtos/create-game";
-import { CreateBoardDTO } from "../dtos/create-board";
+import { CreateBoardEntityDTO } from "../dtos/create-board-entity";
 import { MAX_GAME_ROUNDS } from "../constants/max-game-rounds";
 
 describe("Game entity", () => {
@@ -15,7 +15,7 @@ describe("Game entity", () => {
     sale_cost: 100,
   });
 
-  const boardData: CreateBoardDTO = {
+  const boardData: CreateBoardEntityDTO = {
     buildings: [building],
     players: [player],
   };

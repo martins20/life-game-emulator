@@ -18,6 +18,15 @@ export namespace PlayerErrors {
     }
   }
 
+  export class PlayersNotExistsError extends ApiError {
+    constructor(player_ids: string[]) {
+      const message = `Players [${player_ids}] not exists`;
+
+      const statusCode = 404;
+      super(message, statusCode);
+    }
+  }
+
   export class PlayerNameIsRequiredError extends ApiError {
     constructor() {
       const message = "Player name is required";

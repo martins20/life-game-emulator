@@ -1,6 +1,6 @@
 import { Board } from "@modules/game/entities/Board";
-import { CreateBoardDTO } from "@modules/game/dtos/create-board";
+import { CreateBoardEntityDTO } from "@modules/game/dtos/create-board-entity";
 
 export interface BoardRepositoryContract {
-  create: (data: CreateBoardDTO) => Promise<Board>;
+  create: (data: CreateBoardEntityDTO) => Promise<Board>;
 }
