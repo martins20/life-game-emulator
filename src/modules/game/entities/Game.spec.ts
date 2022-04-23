@@ -3,7 +3,7 @@ import { Player } from "@shared/modules/player/entities/Player";
 
 import { Game } from "./Game";
 import { Board } from "./Board";
-import { CreateGameDTO } from "../dtos/create-game";
+import { CreateGameEntityDTO } from "../dtos/create-game-entity";
 import { CreateBoardEntityDTO } from "../dtos/create-board-entity";
 import { MAX_GAME_ROUNDS } from "../constants/max-game-rounds";
 
@@ -20,7 +20,7 @@ describe("Game entity", () => {
     players: [player],
   };
 
-  const gameData: CreateGameDTO = {
+  const gameData: CreateGameEntityDTO = {
     board: new Board(boardData),
   };
 

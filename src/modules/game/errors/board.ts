@@ -16,4 +16,13 @@ export namespace BoardErrors {
       super(message);
     }
   }
+
+  export class BoardNotExistsError extends ApiError {
+    constructor() {
+      const message = "Board not Exists.";
+      const statusCode = 404;
+
+      super(message, statusCode);
+    }
+  }
 }

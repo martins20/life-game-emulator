@@ -1,6 +1,6 @@
 import { Game } from "@modules/game/entities/Game";
-import { CreateGameDTO } from "@modules/game/dtos/create-game";
+import { CreateGameEntityDTO } from "@modules/game/dtos/create-game-entity";
 
 export interface GameRepositoryContract {
-  create: (data: CreateGameDTO) => Promise<Game>;
+  create: (data: CreateGameEntityDTO) => Promise<Game>;
 }

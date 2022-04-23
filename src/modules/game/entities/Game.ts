@@ -1,5 +1,5 @@
 import { Board } from "./Board";
-import { CreateGameDTO } from "../dtos/create-game";
+import { CreateGameEntityDTO } from "../dtos/create-game-entity";
 import { MAX_GAME_ROUNDS } from "../constants/max-game-rounds";
 
 export class Game {
@@ -8,7 +8,7 @@ export class Game {
   board: Board;
   max_rounds: number = MAX_GAME_ROUNDS;
 
-  constructor(data: CreateGameDTO) {
+  constructor(data: CreateGameEntityDTO) {
     Object.assign(this, data);
   }
 }

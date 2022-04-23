@@ -1,19 +1,22 @@
 import { CreateGameService as Sut } from "./create-game";
 import { FakeGameRepository } from "../repositories/fakes/game";
-import { GameErrors } from "../errors/game";
+import { FakeBoardRepository } from "../repositories/fakes/board";
+import { BoardErrors } from "../errors/board";
 
 let sut: Sut;
 let fakeGameRepository: FakeGameRepository;
+let fakeBoardRepository: FakeBoardRepository;
 
 describe("CreateGameService", () => {
   beforeEach(() => {
     fakeGameRepository = new FakeGameRepository();
-    sut = new Sut(fakeGameRepository);
+    fakeBoardRepository = new FakeBoardRepository();
+    sut = new Sut(fakeGameRepository, fakeBoardRepository);
   });
 
-  it("Should not be able to create a game without a board", async () => {
+  it("Should not be able to create a game a non existent board", async () => {
     await expect(
-      sut.execute({ board: undefined as any })
-    ).rejects.toBeInstanceOf(GameErrors.CannotCreateGameWithoutBoardError);
+      sut.execute({ board_id: "non-existent-board" })
+    ).rejects.toBeInstanceOf(BoardErrors.BoardNotExistsError);
   });
 });

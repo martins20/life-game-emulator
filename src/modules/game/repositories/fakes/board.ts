@@ -18,4 +18,10 @@ export class FakeBoardRepository implements BoardRepositoryContract {
 
     return board;
   }
+
+  async findById(board_id: string): Promise<Board | undefined> {
+    const foundBoard = this.boards.find((board) => board.id === board_id);
+
+    return foundBoard;
+  }
 }
