@@ -35,4 +35,10 @@ describe("Game entity", () => {
 
     expect(game.max_rounds).toBe(MAX_GAME_ROUNDS);
   });
+
+  it("Should be able while creates a game, be default round equal to 0", () => {
+    const game = new Game(gameData);
+
+    expect(game.round).toBe(0);
+  });
 });
