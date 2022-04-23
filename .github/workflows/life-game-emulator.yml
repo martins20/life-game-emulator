@@ -21,6 +21,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        useLockFile: false
 
     - name: Installing dependencies
       run: npm i
