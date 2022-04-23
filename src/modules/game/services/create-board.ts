@@ -14,10 +14,13 @@ export class CreateBoardService {
 
   async execute(data: CreateBoardDTO): Promise<Board> {
     const hasBoardPlayers = data.players.length;
+    const hasBoardBuildings = data.buildings.length;
 
     if (!hasBoardPlayers)
       throw new BoardErrors.CannotCreateBoardWithoutPlayersError();
 
+    if (!hasBoardBuildings)
+      throw new BoardErrors.CannotCreateBoardWithoutBuildingsError();
     return {} as Board;
   }
 }

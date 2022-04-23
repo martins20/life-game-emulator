@@ -8,4 +8,12 @@ export namespace BoardErrors {
       super(message);
     }
   }
+
+  export class CannotCreateBoardWithoutBuildingsError extends ApiError {
+    constructor() {
+      const message = "Cannot create board without buildings.";
+
+      super(message);
+    }
+  }
 }

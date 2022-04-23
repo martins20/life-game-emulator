@@ -21,9 +21,17 @@ describe("CreateBoardService", () => {
     sale_cost: 100,
   });
 
-  it("Should not be able to create a new board withou any players", async () => {
+  it("Should not be able to create a new board without any players", async () => {
     await expect(
       sut.execute({ players: [], buildings: [building] })
     ).rejects.toBeInstanceOf(BoardErrors.CannotCreateBoardWithoutPlayersError);
+  });
+
+  it("Should not be able to create a new board without any buildings", async () => {
+    await expect(
+      sut.execute({ players: [player], buildings: [] })
+    ).rejects.toBeInstanceOf(
+      BoardErrors.CannotCreateBoardWithoutBuildingsError
+    );
   });
 });
