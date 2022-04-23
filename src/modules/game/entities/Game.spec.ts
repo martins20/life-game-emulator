@@ -5,6 +5,7 @@ import { Game } from "./Game";
 import { Board } from "./Board";
 import { CreateGameDTO } from "../dtos/create-game";
 import { CreateBoardDTO } from "../dtos/create-board";
+import { MAX_GAME_ROUNDS } from "../constants/max-game-rounds";
 
 describe("Game entity", () => {
   const player = new Player("Jonh Doe");
@@ -27,5 +28,11 @@ describe("Game entity", () => {
     const game = new Game(gameData);
 
     expect(game).toMatchObject(gameData);
+  });
+
+  it("Should be able while creates a game, be default max_rounds equal to MAX_GAME_ROUNDS", () => {
+    const game = new Game(gameData);
+
+    expect(game.max_rounds).toBe(MAX_GAME_ROUNDS);
   });
 });
