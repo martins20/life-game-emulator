@@ -5,7 +5,7 @@ export class Player {
   id: string;
   balance: number;
   position = 0;
-  turn_counter = 0;
+  round = 0;
 
   category: PlayerCategory | null = null;
 

@@ -80,9 +80,7 @@ export class InMemoryPlayerRepository implements PlayerRepositoryContract {
         ? {
             ...data,
             position: data.position + steps,
-            turn_counter: Math.floor(
-              (data.position + steps) / MAX_GAME_BUILDINGS
-            ),
+            round: Math.floor((data.position + steps) / MAX_GAME_BUILDINGS),
           }
         : data
     );

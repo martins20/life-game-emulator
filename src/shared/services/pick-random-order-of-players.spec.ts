@@ -12,7 +12,7 @@ const makeRandomPlayers = (): Player[] => {
       balance: 300,
       position: 0,
       category: null,
-      turn_counter: 0,
+      round: 0,
     })
   );
 
