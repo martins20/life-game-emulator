@@ -7,7 +7,7 @@ export class Building {
   name: string;
   sale_cost: number;
   rent_cost: number;
-  owner: Player | null;
+  owner: Player | null = null;
 
   constructor(data: CreateBuildingDTO) {
     Object.assign(this, data);
