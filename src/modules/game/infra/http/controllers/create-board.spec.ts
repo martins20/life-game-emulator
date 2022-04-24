@@ -79,4 +79,30 @@ describe("CreateBoardController", () => {
       buildings: [building],
     });
   });
+
+  it("/POST - Should not be able to create a new board with a non-existing player", async () => {
+    const { status, body } = await sutSpy.executeSUT({
+      building_ids: [building.id],
+      player_ids: ["non-existent-player"],
+    });
+
+    expect(status).toBe(404);
+    expect(body).toMatchObject({
+      message: "Players [non-existent-player] not exists",
+    });
+  });
+
+  it("/POST - Should not be able to create a new board with a non-existing building", async () => {
+    const nonExistentBuildingId = 6513513521;
+
+    const { status, body } = await sutSpy.executeSUT({
+      building_ids: [nonExistentBuildingId],
+      player_ids: [player.id],
+    });
+
+    expect(status).toBe(404);
+    expect(body).toMatchObject({
+      message: "Buildings [1] not exists",
+    });
+  });
 });

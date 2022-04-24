@@ -46,15 +46,15 @@ describe("BuildingErrors", () => {
     }
   });
 
-  it("Should to return a error message 'Properties [some-property-id-1, some-property-id-2] not exists' status code equals to 404", () => {
+  it("Should to return a error message 'Buildings [some-property-id-1, some-property-id-2] not exists' status code equals to 404", () => {
     try {
-      throw new BuildingErrors.PropertiesNotExistsError([
+      throw new BuildingErrors.BuildingsNotExistsError([
         "some-property-id-1",
         "some-property-id-2",
       ]);
     } catch (error: any) {
       expect(error.message).toBe(
-        "Properties [some-property-id-1,some-property-id-2] not exists"
+        "Buildings [some-property-id-1,some-property-id-2] not exists"
       );
       expect(error.statusCode).toBe(404);
     }

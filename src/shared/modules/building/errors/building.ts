@@ -42,9 +42,9 @@ export namespace BuildingErrors {
     }
   }
 
-  export class PropertiesNotExistsError extends ApiError {
+  export class BuildingsNotExistsError extends ApiError {
     constructor(property_ids: string[]) {
-      const message = `Properties [${property_ids}] not exists`;
+      const message = `Buildings [${property_ids}] not exists`;
 
       const statusCode = 404;
       super(message, statusCode);

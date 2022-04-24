@@ -9,7 +9,7 @@ import { Building } from "../entities/Building";
 @injectable()
 export class CreateBuildingService {
   constructor(
-    @inject("PropertiesRepository")
+    @inject("BuildingsRepository")
     private propertiesRepository: BuildingRepositoryContract
   ) {}
 

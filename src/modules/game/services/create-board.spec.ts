@@ -70,7 +70,7 @@ describe("CreateBoardService", () => {
         player_ids: [player.id],
         building_ids: [nonExistentBoardId],
       })
-    ).rejects.toBeInstanceOf(BuildingErrors.PropertiesNotExistsError);
+    ).rejects.toBeInstanceOf(BuildingErrors.BuildingsNotExistsError);
   });
 
   it("Should be able to create a new board", async () => {

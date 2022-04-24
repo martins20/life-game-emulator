@@ -17,7 +17,7 @@ container.registerSingleton<PlayerRepositoryContract>(
 );
 
 container.registerSingleton<BuildingRepositoryContract>(
-  "PropertiesRepository",
+  "BuildingsRepository",
   FakeBuildingRepository
 );
 

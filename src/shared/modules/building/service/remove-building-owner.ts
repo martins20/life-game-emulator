@@ -8,19 +8,19 @@ import { RemoveBuildingOwnerDTO } from "../dtos/remove-building-owner";
 @injectable()
 export class RemoveBuildingOwnerService {
   constructor(
-    @inject("PropertiesRepository")
-    private fakePropertiesRepository: BuildingRepositoryContract
+    @inject("BuildingsRepository")
+    private fakeBuildingsRepository: BuildingRepositoryContract
   ) {}
 
   async execute({ property_id }: RemoveBuildingOwnerDTO): Promise<Building> {
-    const foundBuildingById = await this.fakePropertiesRepository.findById(
+    const foundBuildingById = await this.fakeBuildingsRepository.findById(
       property_id
     );
 
     if (!foundBuildingById) throw new BuildingErrors.BuildingNotExistsError();
 
     const propertyWithOwner =
-      await this.fakePropertiesRepository.removeBuildingByOwner({
+      await this.fakeBuildingsRepository.removeBuildingByOwner({
         property_id,
       });
 

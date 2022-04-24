@@ -8,7 +8,7 @@ import { SetBuildingOwnerDTO } from "../dtos/set-building-owner";
 @injectable()
 export class SetBuildingOwnerService {
   constructor(
-    @inject("PropertiesRepository")
+    @inject("BuildingsRepository")
     private propertiesRepository: BuildingRepositoryContract
   ) {}
 

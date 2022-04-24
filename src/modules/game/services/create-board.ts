@@ -23,7 +23,7 @@ export class CreateBoardService {
     private boardsRepository: BoardRepositoryContract,
     @inject("PlayersRepository")
     private playersRepository: PlayerRepositoryContract,
-    @inject("PropertiesRepository")
+    @inject("BuildingsRepository")
     private propertiesRepository: BuildingRepositoryContract
   ) {}
 
@@ -79,11 +79,11 @@ export class CreateBoardService {
     );
 
     if (!everyPlayerWasFound) {
-      const notPropertiesPlayerIDS = reduceredPlayersFromNotFoundPlayers
+      const notBuildingsPlayerIDS = reduceredPlayersFromNotFoundPlayers
         .filter((data) => !data.was_found)
         .map((data) => data.player_id);
 
-      throw new BuildingErrors.PropertiesNotExistsError(notPropertiesPlayerIDS);
+      throw new BuildingErrors.BuildingsNotExistsError(notBuildingsPlayerIDS);
     }
   }
 
