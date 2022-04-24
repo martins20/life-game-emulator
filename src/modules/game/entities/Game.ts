@@ -7,6 +7,7 @@ export class Game {
   round = 0;
   board: Board;
   max_rounds: number = MAX_GAME_ROUNDS;
+  is_game_finished = false;
 
   constructor(data: CreateGameEntityDTO) {
     Object.assign(this, data);
