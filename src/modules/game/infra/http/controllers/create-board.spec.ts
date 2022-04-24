@@ -105,4 +105,28 @@ describe("CreateBoardController", () => {
       message: "Buildings [1] not exists",
     });
   });
+
+  it("/POST - Should not be able to create a new board with an empty building_ids", async () => {
+    const { status, body } = await sutSpy.executeSUT({
+      building_ids: [],
+      player_ids: [player.id],
+    });
+
+    expect(status).toBe(400);
+    expect(body).toMatchObject({
+      message: "Cannot create board without buildings.",
+    });
+  });
+
+  it("/POST - Should not be able to create a new board with an empty player_ids", async () => {
+    const { status, body } = await sutSpy.executeSUT({
+      building_ids: [building.id],
+      player_ids: [],
+    });
+
+    expect(status).toBe(400);
+    expect(body).toMatchObject({
+      message: "Cannot create board without players.",
+    });
+  });
 });
