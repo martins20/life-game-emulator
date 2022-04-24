@@ -1,4 +1,8 @@
 import { container } from "tsyringe";
+import { InMemoryGameRepository } from "@modules/game/repositories/inMemory/game";
+import { InMemoryBoardRepository } from "@modules/game/repositories/inMemory/board";
+import { GameRepositoryContract } from "@modules/game/repositories/contract/game-repository";
+import { BoardRepositoryContract } from "@modules/game/repositories/contract/board-repository";
 
 import { InMemoryPlayerRepository } from "@shared/modules/player/repositories/inMemory/player";
 import { PlayerRepositoryContract } from "@shared/modules/player/repositories/contract/player-repository";
@@ -20,4 +24,14 @@ container.registerSingleton<BuildingRepositoryContract>(
 container.registerSingleton<PlayerCategoryRepositoryContract>(
   "PlayerCategoriesRepository",
   InMemoryPlayerCategoryRepository
+);
+
+container.registerSingleton<BoardRepositoryContract>(
+  "BoardsRepository",
+  InMemoryBoardRepository
+);
+
+container.registerSingleton<GameRepositoryContract>(
+  "GamesRepository",
+  InMemoryGameRepository
 );

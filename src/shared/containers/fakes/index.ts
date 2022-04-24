@@ -1,4 +1,8 @@
 import { container } from "tsyringe";
+import { FakeGameRepository } from "@modules/game/repositories/fakes/game";
+import { FakeBoardRepository } from "@modules/game/repositories/fakes/board";
+import { GameRepositoryContract } from "@modules/game/repositories/contract/game-repository";
+import { BoardRepositoryContract } from "@modules/game/repositories/contract/board-repository";
 
 import { FakePlayerRepository } from "@shared/modules/player/repositories/fakes/player";
 import { PlayerRepositoryContract } from "@shared/modules/player/repositories/contract/player-repository";
@@ -20,4 +24,14 @@ container.registerSingleton<BuildingRepositoryContract>(
 container.registerSingleton<PlayerCategoryRepositoryContract>(
   "PlayerCategoriesRepository",
   FakePlayerCategoryRepository
+);
+
+container.registerSingleton<BoardRepositoryContract>(
+  "BoardsRepository",
+  FakeBoardRepository
+);
+
+container.registerSingleton<GameRepositoryContract>(
+  "GamesRepository",
+  FakeGameRepository
 );
