@@ -1,3 +1,5 @@
+import { DEFAULT_PLAYER_CATEGORIES } from "@shared/modules/category/modules/player-category/constants";
+
 import { PlayerCategoryRepositoryContract } from "../contract/player-category-repository";
 import { PlayerCategory } from "../../entities/PlayerCategory";
 import { CreatePlayerCategoryDTO } from "../../dtos/create-player-category";
@@ -5,6 +7,16 @@ import { CreatePlayerCategoryDTO } from "../../dtos/create-player-category";
 export class FakePlayerCategoryRepository
   implements PlayerCategoryRepositoryContract
 {
+  constructor() {
+    this.runSeeds();
+  }
+
+  private async runSeeds(): Promise<void> {
+    await Promise.all(
+      DEFAULT_PLAYER_CATEGORIES.map((data) => this.create(data))
+    );
+  }
+
   private playerTypes: PlayerCategory[] = [];
 
   async create(data: CreatePlayerCategoryDTO): Promise<PlayerCategory> {

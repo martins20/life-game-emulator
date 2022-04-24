@@ -1,0 +1,11 @@
+import { WARY_PLAYER_CATEGORY } from "./wary";
+import { RANDOM_PLAYER_CATEGORY } from "./random";
+import { PICKY_PLAYER_CATEGORY } from "./picky";
+import { IMPULSIVE_PLAYER_CATEGORY } from "./impusive";
+
+export const DEFAULT_PLAYER_CATEGORIES = [
+  IMPULSIVE_PLAYER_CATEGORY,
+  PICKY_PLAYER_CATEGORY,
+  RANDOM_PLAYER_CATEGORY,
+  WARY_PLAYER_CATEGORY,
+];
