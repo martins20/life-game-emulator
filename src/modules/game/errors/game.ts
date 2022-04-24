@@ -8,4 +8,21 @@ export namespace GameErrors {
       super(message);
     }
   }
+
+  export class GameNotExistsError extends ApiError {
+    constructor() {
+      const message = "Game not exists.";
+      const statusCode = 404;
+
+      super(message, statusCode);
+    }
+  }
+
+  export class CannotSimulateGameWithOnePlayer extends ApiError {
+    constructor() {
+      const message = "Cannot simulate a game with one player.";
+
+      super(message);
+    }
+  }
 }

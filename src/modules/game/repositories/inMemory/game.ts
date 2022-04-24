@@ -15,4 +15,10 @@ export class InMemoryGameRepository implements GameRepositoryContract {
 
     return game;
   }
+
+  async findById(game_id: string): Promise<Game | undefined> {
+    const foundGame = this.games.find((game) => game.id === game_id);
+
+    return foundGame;
+  }
 }
