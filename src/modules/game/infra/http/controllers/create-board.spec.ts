@@ -4,6 +4,7 @@ import { CreateBoardDTO } from "@modules/game/dtos/create-board";
 import { makeSuperTestRequest } from "@shared/test/helpers/make-supertest-request";
 import { api } from "@shared/Server";
 import { Player } from "@shared/modules/player/entities/Player";
+import { SetPlayerCategoryDTO } from "@shared/modules/player/dtos/set-player-category";
 import { CreatePlayerDTO } from "@shared/modules/player/dtos/create-player";
 import { Building } from "@shared/modules/building/entities/Building";
 import { CreateBuildingDTO } from "@shared/modules/building/dtos/create-building";
@@ -15,11 +16,23 @@ let server: SuperTest<Test>;
 
 class SutSpy {
   async createPlayer(data: CreatePlayerDTO): Promise<Player> {
-    const { body } = await makeSuperTestRequest<CreatePlayerDTO>({
+    const { body: createdPlayer } = await makeSuperTestRequest<CreatePlayerDTO>(
+      {
+        api: server,
+        method: "post",
+        path: "/players",
+        payload: data,
+      }
+    );
+
+    const { body } = await makeSuperTestRequest<SetPlayerCategoryDTO>({
       api: server,
-      method: "post",
-      path: "/players",
-      payload: data,
+      method: "put",
+      path: "/players/category",
+      payload: {
+        player_id: createdPlayer.id,
+        category_name: "integration-test–category-name",
+      },
     });
 
     return body;

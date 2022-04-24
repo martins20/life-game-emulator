@@ -25,4 +25,12 @@ export namespace BoardErrors {
       super(message, statusCode);
     }
   }
+
+  export class CannotCreateBoardWithPlayerWithoutCategoryError extends ApiError {
+    constructor(player_ids: string[]) {
+      const message = `Cannot create board with players [${player_ids}] without a category.`;
+
+      super(message);
+    }
+  }
 }

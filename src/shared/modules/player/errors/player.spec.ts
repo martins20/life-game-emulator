@@ -19,7 +19,7 @@ describe("PlayerErrors", () => {
     }
   });
 
-  it("Should to return a error message 'Players [some-player-id-1, some-player-id-2] not exists' status code equals to 404", () => {
+  it("Should to return a error message 'Players [some-player-id-1,some-player-id-2] not exists' status code equals to 404", () => {
     try {
       throw new PlayerErrors.PlayersNotExistsError([
         "some-player-id-1",

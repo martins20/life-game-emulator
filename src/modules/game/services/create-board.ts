@@ -112,6 +112,17 @@ export class CreateBoardService {
     this.checkHasNotFoundPlayers(foundPlayers, data.player_ids);
     this.checkHasNotFoundBuildings(foundBuildings, data.player_ids);
 
+    const isEveryPlayerWithSomeCategory = foundPlayers.every(
+      (data) => data?.category
+    );
+
+    if (!isEveryPlayerWithSomeCategory)
+      throw new BoardErrors.CannotCreateBoardWithPlayerWithoutCategoryError(
+        foundPlayers
+          .filter((data) => !data?.category)
+          .map((player) => player!.id)
+      );
+
     const board = this.boardsRepository.create({
       players: foundPlayers as Player[],
       buildings: foundBuildings as Building[],

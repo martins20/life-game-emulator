@@ -32,6 +32,15 @@ describe("CreateBoardService", () => {
       name: "Jonh Doe",
     });
 
+    player = await fakePlayerRepository.setPlayerCategory({
+      player_id: player.id,
+      category: {
+        id: "some-category-id",
+        name: "some-category-name",
+        buyBuildingCondictionResponseCallback: jest.fn(),
+      },
+    });
+
     building = await fakeBuildingRepository.create({
       name: "Doe's House",
       rent_cost: 50,
@@ -71,6 +80,21 @@ describe("CreateBoardService", () => {
         building_ids: [nonExistentBoardId],
       })
     ).rejects.toBeInstanceOf(BuildingErrors.BuildingsNotExistsError);
+  });
+
+  it("Should not be able to create a new board with least one player without category", async () => {
+    const playerWithoutCategory = await fakePlayerRepository.create({
+      name: "John Tree",
+    });
+
+    await expect(
+      sut.execute({
+        player_ids: [playerWithoutCategory.id],
+        building_ids: [building.id],
+      })
+    ).rejects.toBeInstanceOf(
+      BoardErrors.CannotCreateBoardWithPlayerWithoutCategoryError
+    );
   });
 
   it("Should be able to create a new board", async () => {
