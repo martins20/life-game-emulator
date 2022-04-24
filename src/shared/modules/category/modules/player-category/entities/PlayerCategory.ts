@@ -1,7 +1,7 @@
 import { Category } from "@shared/modules/category/entities/Category";
 
 import { CreatePlayerCategoryDTO } from "../dtos/create-player-category";
-import { BuyBuildingCondictionResponseCallbackDTO } from "../dtos/buy-property-condiction-callback";
+import { BuyBuildingCondictionResponseCallbackDTO } from "../dtos/buy-building-condiction-callback";
 
 export class PlayerCategory extends Category {
   buyBuildingCondictionResponseCallback: BuyBuildingCondictionResponseCallbackDTO;

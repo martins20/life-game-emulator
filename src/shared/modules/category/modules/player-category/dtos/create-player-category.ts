@@ -1,4 +1,4 @@
-import { BuyBuildingCondictionResponseCallbackDTO } from "./buy-property-condiction-callback";
+import { BuyBuildingCondictionResponseCallbackDTO } from "./buy-building-condiction-callback";
 
 export interface CreatePlayerCategoryDTO {
   name: string;

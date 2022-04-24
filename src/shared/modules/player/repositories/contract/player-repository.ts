@@ -3,6 +3,7 @@ import { IncreasePlayerBalanceDTO } from "@shared/modules/player/dtos/increase-p
 import { DecreasePlayerBalanceDTO } from "@shared/modules/player/dtos/decrease-player-balance";
 import { CreatePlayerDTO } from "@shared/modules/player/dtos/create-player";
 
+import { UpdatePlayerCategoryDTO } from "../../dtos/update-player-category";
 import { MovePlayerForwardDTO } from "../../dtos/move-player-forward";
 
 export interface PlayerRepositoryContract {
@@ -12,4 +13,5 @@ export interface PlayerRepositoryContract {
   increasePlayerBalance: (data: IncreasePlayerBalanceDTO) => Promise<Player>;
   decreasePlayerBalance: (data: DecreasePlayerBalanceDTO) => Promise<Player>;
   moveForward: (data: MovePlayerForwardDTO) => Promise<Player>;
+  setPlayerCategory: (data: UpdatePlayerCategoryDTO) => Promise<Player>;
 }

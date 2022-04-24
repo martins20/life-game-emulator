@@ -1,5 +1,5 @@
 import { CreatePlayerCategoryDTO } from "../dtos/create-player-category";
-import { BuyBuildingCondictionsParamDTO } from "../dtos/buy-property-condictions-param";
+import { BuyBuildingCondictionsParamDTO } from "../dtos/buy-building-condictions-param";
 
 export const PICKY_PLAYER_CATEGORY: CreatePlayerCategoryDTO = {
   name: "picky",

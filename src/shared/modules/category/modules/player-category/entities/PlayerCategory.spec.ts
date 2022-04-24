@@ -1,6 +1,6 @@
 import { PlayerCategory } from "./PlayerCategory";
 import { CreatePlayerCategoryDTO } from "../dtos/create-player-category";
-import { BuyBuildingCondictionsParamDTO } from "../dtos/buy-property-condictions-param";
+import { BuyBuildingCondictionsParamDTO } from "../dtos/buy-building-condictions-param";
 
 const makePlayerCategory = (data: CreatePlayerCategoryDTO): PlayerCategory => {
   const character = new PlayerCategory(data);

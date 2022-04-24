@@ -1,4 +1,4 @@
-import { BuyBuildingCondictionsParamDTO } from "./buy-property-condictions-param";
+import { BuyBuildingCondictionsParamDTO } from "./buy-building-condictions-param";
 
 export type BuyBuildingCondictionResponseCallbackDTO = (
   data: BuyBuildingCondictionsParamDTO

@@ -6,6 +6,7 @@ import { DecreasePlayerBalanceDTO } from "@shared/modules/player/dtos/decrease-p
 import { CreatePlayerDTO } from "@shared/modules/player/dtos/create-player";
 
 import { PlayerRepositoryContract } from "../contract/player-repository";
+import { UpdatePlayerCategoryDTO } from "../../dtos/update-player-category";
 import { MovePlayerForwardDTO } from "../../dtos/move-player-forward";
 
 export class FakePlayerRepository implements PlayerRepositoryContract {
@@ -81,6 +82,27 @@ export class FakePlayerRepository implements PlayerRepositoryContract {
             ...data,
             position: data.position + steps,
             round: Math.floor((data.position + steps) / MAX_GAME_BUILDINGS),
+          }
+        : data
+    );
+
+    this.players = updatedPlayers;
+
+    const updatedPlayer = await this.findById(player_id);
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return updatedPlayer!;
+  }
+
+  async setPlayerCategory({
+    player_id,
+    category,
+  }: UpdatePlayerCategoryDTO): Promise<Player> {
+    const updatedPlayers = this.players.map((data) =>
+      data.id === player_id
+        ? {
+            ...data,
+            category,
           }
         : data
     );

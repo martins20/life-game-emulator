@@ -1,5 +1,3 @@
-import { DEFAULT_PLAYER_CATEGORIES } from "@shared/modules/category/modules/player-category/constants";
-
 import { PlayerCategoryRepositoryContract } from "../contract/player-category-repository";
 import { PlayerCategory } from "../../entities/PlayerCategory";
 import { CreatePlayerCategoryDTO } from "../../dtos/create-player-category";
@@ -7,28 +5,24 @@ import { CreatePlayerCategoryDTO } from "../../dtos/create-player-category";
 export class FakePlayerCategoryRepository
   implements PlayerCategoryRepositoryContract
 {
-  constructor() {
-    this.runSeeds();
-  }
-
-  private async runSeeds(): Promise<void> {
-    await Promise.all(
-      DEFAULT_PLAYER_CATEGORIES.map((data) => this.create(data))
-    );
-  }
-
-  private playerTypes: PlayerCategory[] = [];
+  private playerCategories: PlayerCategory[] = [
+    {
+      id: "some-id",
+      name: "integration-test–category-name",
+      buyBuildingCondictionResponseCallback: () => true,
+    },
+  ];
 
   async create(data: CreatePlayerCategoryDTO): Promise<PlayerCategory> {
-    const playerType = new PlayerCategory(data);
+    const playerCategories = new PlayerCategory(data);
 
-    Object.assign(playerType, {
-      id: String(Date.now() + this.playerTypes.length + 1),
+    Object.assign(playerCategories, {
+      id: String(Date.now() + this.playerCategories.length + 1),
     });
 
-    this.playerTypes.push(playerType);
+    this.playerCategories.push(playerCategories);
 
-    return playerType;
+    return playerCategories;
   }
 
   async findByPlayerCategoryName(
@@ -36,7 +30,7 @@ export class FakePlayerCategoryRepository
   ): Promise<PlayerCategory | undefined> {
     const lowerCaseName = name.toLocaleLowerCase();
 
-    const foundPlayerType = this.playerTypes.find(
+    const foundPlayerType = this.playerCategories.find(
       (data) => data.name.toLocaleLowerCase() === lowerCaseName
     );
 
