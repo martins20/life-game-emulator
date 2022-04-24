@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
 
-import { PropertyRepositoryContract } from "@shared/modules/property/repositories/contract/property-repository";
-import { PropertyErrors } from "@shared/modules/property/errors/property";
-import { Property } from "@shared/modules/property/entities/Property";
 import { PlayerRepositoryContract } from "@shared/modules/player/repositories/contract/player-repository";
 import { PlayerErrors } from "@shared/modules/player/errors/player";
 import { Player } from "@shared/modules/player/entities/Player";
+import { BuildingRepositoryContract } from "@shared/modules/building/repositories/contract/building-repository";
+import { BuildingErrors } from "@shared/modules/building/errors/building";
+import { Building } from "@shared/modules/building/entities/Building";
 
 import { BoardRepositoryContract } from "../repositories/contract/board-repository";
 import { BoardErrors } from "../errors/board";
@@ -24,7 +24,7 @@ export class CreateBoardService {
     @inject("PlayersRepository")
     private playersRepository: PlayerRepositoryContract,
     @inject("PropertiesRepository")
-    private propertiesRepository: PropertyRepositoryContract
+    private propertiesRepository: BuildingRepositoryContract
   ) {}
 
   private checkHasNotFoundPlayers(
@@ -58,7 +58,7 @@ export class CreateBoardService {
   }
 
   private checkHasNotFoundBuildings(
-    foundPlayers: (Property | undefined)[],
+    foundPlayers: (Building | undefined)[],
     servicePlayerIDs: string[]
   ): void {
     const reduceredPlayersFromNotFoundPlayers = foundPlayers.reduce<
@@ -83,7 +83,7 @@ export class CreateBoardService {
         .filter((data) => !data.was_found)
         .map((data) => data.player_id);
 
-      throw new PropertyErrors.PropertiesNotExistsError(notPropertiesPlayerIDS);
+      throw new BuildingErrors.PropertiesNotExistsError(notPropertiesPlayerIDS);
     }
   }
 
@@ -114,7 +114,7 @@ export class CreateBoardService {
 
     const board = this.boardsRepository.create({
       players: foundPlayers as Player[],
-      buildings: foundBuildings as Property[],
+      buildings: foundBuildings as Building[],
     });
 
     return board;

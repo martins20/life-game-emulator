@@ -1,18 +1,18 @@
-import { PropertyErrors } from "./property";
+import { BuildingErrors } from "./building";
 
-describe("PropertyErrors", () => {
-  it("Should to return a error message 'Property already exists' status code equals to 400", () => {
+describe("BuildingErrors", () => {
+  it("Should to return a error message 'Building already exists' status code equals to 400", () => {
     try {
-      throw new PropertyErrors.PropertyAlreadyExistsError();
+      throw new BuildingErrors.BuildingAlreadyExistsError();
     } catch (error: any) {
-      expect(error.message).toBe("Property already exists");
+      expect(error.message).toBe("Building already exists");
       expect(error.statusCode).toBe(400);
     }
   });
 
   it("Should to return a error message ''sale_cost' must be greater than 0' status code equals to 400", () => {
     try {
-      throw new PropertyErrors.CannotCreatePropertyWithInvalidSaleCostError();
+      throw new BuildingErrors.CannotCreateBuildingWithInvalidSaleCostError();
     } catch (error: any) {
       expect(error.message).toBe("'sale_cost' must be greater than 0");
       expect(error.statusCode).toBe(400);
@@ -21,34 +21,34 @@ describe("PropertyErrors", () => {
 
   it("Should to return a error message ''rent_cost' must be greater than 0' status code equals to 400", () => {
     try {
-      throw new PropertyErrors.CannotCreatePropertyWithInvalidRentCostError();
+      throw new BuildingErrors.CannotCreateBuildingWithInvalidRentCostError();
     } catch (error: any) {
       expect(error.message).toBe("'rent_cost' must be greater than 0");
       expect(error.statusCode).toBe(400);
     }
   });
 
-  it("Should to return a error message 'Property not exists' status code equals to 404", () => {
+  it("Should to return a error message 'Building not exists' status code equals to 404", () => {
     try {
-      throw new PropertyErrors.PropertyNotExistsError();
+      throw new BuildingErrors.BuildingNotExistsError();
     } catch (error: any) {
-      expect(error.message).toBe("Property not exists");
+      expect(error.message).toBe("Building not exists");
       expect(error.statusCode).toBe(404);
     }
   });
 
-  it("Should to return a error message 'Property already has owner' status code equals to 400", () => {
+  it("Should to return a error message 'Building already has owner' status code equals to 400", () => {
     try {
-      throw new PropertyErrors.PropertyAlreadyHasOwnerError();
+      throw new BuildingErrors.BuildingAlreadyHasOwnerError();
     } catch (error: any) {
-      expect(error.message).toBe("Property already has owner");
+      expect(error.message).toBe("Building already has owner");
       expect(error.statusCode).toBe(400);
     }
   });
 
   it("Should to return a error message 'Properties [some-property-id-1, some-property-id-2] not exists' status code equals to 404", () => {
     try {
-      throw new PropertyErrors.PropertiesNotExistsError([
+      throw new BuildingErrors.PropertiesNotExistsError([
         "some-property-id-1",
         "some-property-id-2",
       ]);

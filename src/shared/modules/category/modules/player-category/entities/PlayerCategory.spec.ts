@@ -1,6 +1,6 @@
 import { PlayerCategory } from "./PlayerCategory";
 import { CreatePlayerCategoryDTO } from "../dtos/create-player-category";
-import { BuyPropertyCondictionsParamDTO } from "../dtos/buy-property-condictions-param";
+import { BuyBuildingCondictionsParamDTO } from "../dtos/buy-property-condictions-param";
 
 const makePlayerCategory = (data: CreatePlayerCategoryDTO): PlayerCategory => {
   const character = new PlayerCategory(data);
@@ -8,20 +8,20 @@ const makePlayerCategory = (data: CreatePlayerCategoryDTO): PlayerCategory => {
   return character;
 };
 
-const mockBuyPropertyCondictionResponseCallback = ({
+const mockBuyBuildingCondictionResponseCallback = ({
   player_balance,
   sale_cost,
-}: BuyPropertyCondictionsParamDTO): boolean => {
-  const shouldPlayerBuyProperty = player_balance > sale_cost;
+}: BuyBuildingCondictionsParamDTO): boolean => {
+  const shouldPlayerBuyBuilding = player_balance > sale_cost;
 
-  return shouldPlayerBuyProperty;
+  return shouldPlayerBuyBuilding;
 };
 
 describe("PlayerCategory entity", () => {
   const characterData: CreatePlayerCategoryDTO = {
     name: "player-category-test",
-    buyPropertyCondictionResponseCallback:
-      mockBuyPropertyCondictionResponseCallback,
+    buyBuildingCondictionResponseCallback:
+      mockBuyBuildingCondictionResponseCallback,
   };
 
   it("Should creates a player category", () => {
@@ -30,10 +30,10 @@ describe("PlayerCategory entity", () => {
     expect(playerType).toMatchObject(characterData);
   });
 
-  it("Should return 'buyPropertyCondictionResponseCallback' response by running it", () => {
+  it("Should return 'buyBuildingCondictionResponseCallback' response by running it", () => {
     makePlayerCategory(characterData);
 
-    const response = mockBuyPropertyCondictionResponseCallback({
+    const response = mockBuyBuildingCondictionResponseCallback({
       player_balance: 10,
       sale_cost: 1,
       rent_value: 1,

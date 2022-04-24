@@ -1,15 +1,15 @@
 import { Player } from "@shared/modules/player/entities/Player";
 
-import { CreatePropertyDTO } from "../dtos/create-property";
+import { CreateBuildingDTO } from "../dtos/create-building";
 
-export class Property {
+export class Building {
   id: number;
   name: string;
   sale_cost: number;
   rent_cost: number;
   owner: Player | null;
 
-  constructor(data: CreatePropertyDTO) {
+  constructor(data: CreateBuildingDTO) {
     Object.assign(this, data);
   }
 }

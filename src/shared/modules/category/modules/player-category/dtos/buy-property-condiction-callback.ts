@@ -1,5 +1,5 @@
-import { BuyPropertyCondictionsParamDTO } from "./buy-property-condictions-param";
+import { BuyBuildingCondictionsParamDTO } from "./buy-property-condictions-param";
 
-export type BuyPropertyCondictionResponseCallbackDTO = (
-  data: BuyPropertyCondictionsParamDTO
+export type BuyBuildingCondictionResponseCallbackDTO = (
+  data: BuyBuildingCondictionsParamDTO
 ) => boolean;

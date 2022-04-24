@@ -1,12 +1,12 @@
-import { Property } from "@shared/modules/property/entities/Property";
 import { Player } from "@shared/modules/player/entities/Player";
+import { Building } from "@shared/modules/building/entities/Building";
 
 import { CreateBoardEntityDTO } from "../dtos/create-board-entity";
 
 export class Board {
   id: string;
 
-  buildings: Property[];
+  buildings: Building[];
   players: Player[];
 
   constructor(data: CreateBoardEntityDTO) {

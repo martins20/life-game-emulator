@@ -1,5 +1,5 @@
-import { Property } from "@shared/modules/property/entities/Property";
 import { Player } from "@shared/modules/player/entities/Player";
+import { Building } from "@shared/modules/building/entities/Building";
 
 import { Game } from "./Game";
 import { Board } from "./Board";
@@ -9,7 +9,7 @@ import { MAX_GAME_ROUNDS } from "../constants/max-game-rounds";
 
 describe("Game entity", () => {
   const player = new Player("Jonh Doe");
-  const building = new Property({
+  const building = new Building({
     name: "Doe's House",
     rent_cost: 50,
     sale_cost: 100,

@@ -1,9 +1,9 @@
-import { FakePropertyRepository } from "@shared/modules/property/repositories/fakes/property";
-import { PropertyErrors } from "@shared/modules/property/errors/property";
-import { Property } from "@shared/modules/property/entities/Property";
 import { FakePlayerRepository } from "@shared/modules/player/repositories/fakes/player";
 import { PlayerErrors } from "@shared/modules/player/errors/player";
 import { Player } from "@shared/modules/player/entities/Player";
+import { FakeBuildingRepository } from "@shared/modules/building/repositories/fakes/building";
+import { BuildingErrors } from "@shared/modules/building/errors/building";
+import { Building } from "@shared/modules/building/entities/Building";
 
 import { CreateBoardService as Sut } from "./create-board";
 import { FakeBoardRepository } from "../repositories/fakes/board";
@@ -12,27 +12,27 @@ import { CreateBoardDTO } from "../dtos/create-board";
 
 let sut: Sut;
 let player: Player;
-let building: Property;
+let building: Building;
 let fakeBoardRepository: FakeBoardRepository;
-let fakePropertyRepository: FakePropertyRepository;
+let fakeBuildingRepository: FakeBuildingRepository;
 let fakePlayerRepository: FakePlayerRepository;
 
 describe("CreateBoardService", () => {
   beforeEach(async () => {
     fakeBoardRepository = new FakeBoardRepository();
     fakePlayerRepository = new FakePlayerRepository();
-    fakePropertyRepository = new FakePropertyRepository();
+    fakeBuildingRepository = new FakeBuildingRepository();
     sut = new Sut(
       fakeBoardRepository,
       fakePlayerRepository,
-      fakePropertyRepository
+      fakeBuildingRepository
     );
 
     player = await fakePlayerRepository.create({
       name: "Jonh Doe",
     });
 
-    building = await fakePropertyRepository.create({
+    building = await fakeBuildingRepository.create({
       name: "Doe's House",
       rent_cost: 50,
       sale_cost: 100,
@@ -70,7 +70,7 @@ describe("CreateBoardService", () => {
         player_ids: [player.id],
         building_ids: [nonExistentBoardId],
       })
-    ).rejects.toBeInstanceOf(PropertyErrors.PropertiesNotExistsError);
+    ).rejects.toBeInstanceOf(BuildingErrors.PropertiesNotExistsError);
   });
 
   it("Should be able to create a new board", async () => {

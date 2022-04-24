@@ -1,12 +1,12 @@
-import { Property } from "@shared/modules/property/entities/Property";
 import { Player } from "@shared/modules/player/entities/Player";
+import { Building } from "@shared/modules/building/entities/Building";
 
 import { Board } from "./Board";
 import { CreateBoardEntityDTO } from "../dtos/create-board-entity";
 
 describe("Board entity", () => {
   const player = new Player("Jonh Doe");
-  const building = new Property({
+  const building = new Building({
     name: "Doe's House",
     rent_cost: 50,
     sale_cost: 100,

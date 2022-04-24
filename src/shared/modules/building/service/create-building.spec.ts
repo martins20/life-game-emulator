@@ -1,19 +1,19 @@
-import { FakePropertyRepository } from "@shared/modules/property/repositories/fakes/property";
+import { FakeBuildingRepository } from "@shared/modules/building/repositories/fakes/building";
 
-import { CreatePropertyService as Sut } from "./create-property";
-import { PropertyErrors } from "../errors/property";
-import { CreatePropertyDTO } from "../dtos/create-property";
+import { CreateBuildingService as Sut } from "./create-building";
+import { BuildingErrors } from "../errors/building";
+import { CreateBuildingDTO } from "../dtos/create-building";
 
 let sut: Sut;
-let fakePropertyRepository: FakePropertyRepository;
+let fakeBuildingRepository: FakeBuildingRepository;
 
-describe("CreatePropertyService", () => {
+describe("CreateBuildingService", () => {
   beforeEach(() => {
-    fakePropertyRepository = new FakePropertyRepository();
-    sut = new Sut(fakePropertyRepository);
+    fakeBuildingRepository = new FakeBuildingRepository();
+    sut = new Sut(fakeBuildingRepository);
   });
 
-  const propertyData: CreatePropertyDTO = {
+  const propertyData: CreateBuildingDTO = {
     name: "Doe's house",
     rent_cost: 80,
     sale_cost: 200,
@@ -28,10 +28,10 @@ describe("CreatePropertyService", () => {
   });
 
   it("Should not be able to create a property with an existent property name", async () => {
-    await fakePropertyRepository.create(propertyData);
+    await fakeBuildingRepository.create(propertyData);
 
     await expect(sut.execute(propertyData)).rejects.toBeInstanceOf(
-      PropertyErrors.PropertyAlreadyExistsError
+      BuildingErrors.BuildingAlreadyExistsError
     );
   });
 
@@ -39,7 +39,7 @@ describe("CreatePropertyService", () => {
     await expect(
       sut.execute({ ...propertyData, sale_cost: 0 })
     ).rejects.toBeInstanceOf(
-      PropertyErrors.CannotCreatePropertyWithInvalidSaleCostError
+      BuildingErrors.CannotCreateBuildingWithInvalidSaleCostError
     );
   });
 
@@ -47,7 +47,7 @@ describe("CreatePropertyService", () => {
     await expect(
       sut.execute({ ...propertyData, sale_cost: -1 })
     ).rejects.toBeInstanceOf(
-      PropertyErrors.CannotCreatePropertyWithInvalidSaleCostError
+      BuildingErrors.CannotCreateBuildingWithInvalidSaleCostError
     );
   });
 
@@ -55,7 +55,7 @@ describe("CreatePropertyService", () => {
     await expect(
       sut.execute({ ...propertyData, rent_cost: 0 })
     ).rejects.toBeInstanceOf(
-      PropertyErrors.CannotCreatePropertyWithInvalidRentCostError
+      BuildingErrors.CannotCreateBuildingWithInvalidRentCostError
     );
   });
 
@@ -63,7 +63,7 @@ describe("CreatePropertyService", () => {
     await expect(
       sut.execute({ ...propertyData, rent_cost: -1 })
     ).rejects.toBeInstanceOf(
-      PropertyErrors.CannotCreatePropertyWithInvalidRentCostError
+      BuildingErrors.CannotCreateBuildingWithInvalidRentCostError
     );
   });
 });

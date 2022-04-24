@@ -14,7 +14,7 @@ describe("CreatePlayerCategoryService", () => {
 
   const playerCategoryData: CreatePlayerCategoryDTO = {
     name: "player-category-test",
-    buyPropertyCondictionResponseCallback: jest.fn(),
+    buyBuildingCondictionResponseCallback: jest.fn(),
   };
 
   it("Should be able to creates a new player category", async () => {

@@ -1,10 +1,10 @@
 import { Category } from "@shared/modules/category/entities/Category";
 
 import { CreatePlayerCategoryDTO } from "../dtos/create-player-category";
-import { BuyPropertyCondictionResponseCallbackDTO } from "../dtos/buy-property-condiction-callback";
+import { BuyBuildingCondictionResponseCallbackDTO } from "../dtos/buy-property-condiction-callback";
 
 export class PlayerCategory extends Category {
-  buyPropertyCondictionResponseCallback: BuyPropertyCondictionResponseCallbackDTO;
+  buyBuildingCondictionResponseCallback: BuyBuildingCondictionResponseCallbackDTO;
 
   constructor(data: CreatePlayerCategoryDTO) {
     super({ name: data.name });

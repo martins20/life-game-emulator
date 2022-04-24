@@ -1,15 +1,15 @@
 import { ApiError } from "@shared/errors/api";
 
-export namespace PropertyErrors {
-  export class PropertyAlreadyExistsError extends ApiError {
+export namespace BuildingErrors {
+  export class BuildingAlreadyExistsError extends ApiError {
     constructor() {
-      const message = "Property already exists";
+      const message = "Building already exists";
 
       super(message);
     }
   }
 
-  export class CannotCreatePropertyWithInvalidSaleCostError extends ApiError {
+  export class CannotCreateBuildingWithInvalidSaleCostError extends ApiError {
     constructor() {
       const message = "'sale_cost' must be greater than 0";
 
@@ -17,7 +17,7 @@ export namespace PropertyErrors {
     }
   }
 
-  export class CannotCreatePropertyWithInvalidRentCostError extends ApiError {
+  export class CannotCreateBuildingWithInvalidRentCostError extends ApiError {
     constructor() {
       const message = "'rent_cost' must be greater than 0";
 
@@ -25,18 +25,18 @@ export namespace PropertyErrors {
     }
   }
 
-  export class PropertyNotExistsError extends ApiError {
+  export class BuildingNotExistsError extends ApiError {
     constructor() {
-      const message = "Property not exists";
+      const message = "Building not exists";
       const statusCode = 404;
 
       super(message, statusCode);
     }
   }
 
-  export class PropertyAlreadyHasOwnerError extends ApiError {
+  export class BuildingAlreadyHasOwnerError extends ApiError {
     constructor() {
-      const message = "Property already has owner";
+      const message = "Building already has owner";
 
       super(message);
     }
