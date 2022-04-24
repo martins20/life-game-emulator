@@ -1,9 +1,8 @@
-import { MAX_GAME_BUILDINGS } from "@modules/game/constants/max-game-buildings";
-
 import { Player } from "@shared/modules/player/entities/Player";
 import { IncreasePlayerBalanceDTO } from "@shared/modules/player/dtos/increase-player-balance";
 import { DecreasePlayerBalanceDTO } from "@shared/modules/player/dtos/decrease-player-balance";
 import { CreatePlayerDTO } from "@shared/modules/player/dtos/create-player";
+import { MAX_GAME_BUILDINGS } from "@shared/modules/building/constants/max-game-buildings";
 
 import { PlayerRepositoryContract } from "../contract/player-repository";
 import { UpdatePlayerCategoryDTO } from "../../dtos/update-player-category";

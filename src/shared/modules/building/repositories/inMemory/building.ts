@@ -4,9 +4,25 @@ import { RemoveBuildingOwnerDTO } from "@shared/modules/building/dtos/remove-bui
 import { CreateBuildingDTO } from "@shared/modules/building/dtos/create-building";
 
 import { BuildingRepositoryContract } from "../contract/building-repository";
+import { GenerateBuildingDataWithRandomRentAndSaleCostValuesHelper } from "../../helpers/generate-building-data-with-random-rent-and-sale-cost-values";
+import { MAX_GAME_BUILDINGS } from "../../constants/max-game-buildings";
 
 export class InMemoryBuildingRepository implements BuildingRepositoryContract {
+  constructor() {}
+
   private properties: Building[] = [];
+
+  async runSeeds() {
+    await Promise.all(
+      Array.from({ length: MAX_GAME_BUILDINGS }).map((_, index) =>
+        this.create(
+          GenerateBuildingDataWithRandomRentAndSaleCostValuesHelper(
+            `Building ${index + 1}`
+          )
+        )
+      )
+    );
+  }
 
   async create(data: CreateBuildingDTO): Promise<Building> {
     const createdBuilding = new Building(data);
