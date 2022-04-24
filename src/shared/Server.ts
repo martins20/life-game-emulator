@@ -5,6 +5,7 @@ import "express-async-errors";
 import express, { Express } from "express";
 
 import { apiRoutes } from "./infra/http/routes/index.routes";
+import HandleErrorsMiddleware from "./infra/http/middlewares/hanlde-errors";
 
 const isTest = !!process.env.IS_TEST;
 
@@ -34,7 +35,11 @@ class Server {
     this.api.use(apiRoutes);
   }
 
-  private handleErrors(): void {}
+  private handleErrors(): void {
+    const handleErrors = HandleErrorsMiddleware.getInstance();
+
+    this.api.use(handleErrors.execute);
+  }
 }
 
 export const { api } = new Server();

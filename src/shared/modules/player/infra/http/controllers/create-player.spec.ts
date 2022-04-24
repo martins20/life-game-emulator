@@ -41,4 +41,13 @@ describe("CreatePlayerController", () => {
       round: 0,
     });
   });
+
+  it("/POST - Should not be able to create a player with an existent player name", async () => {
+    const { status, body } = await sutSpy.executeSUT(createPlayerData);
+
+    expect(status).toBe(400);
+    expect(body).toMatchObject({
+      message: "Player already exists",
+    });
+  });
 });
