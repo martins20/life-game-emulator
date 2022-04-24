@@ -1,5 +1,5 @@
+import { DEFAULT_PLAYER_BALANCE } from "@shared/modules/player/constants/default-player-balance";
 import { PlayerCategory } from "@shared/modules/category/modules/player-category/entities/PlayerCategory";
-import { DEFAULT_PLAYER_BALANCE } from "@shared/constants/default-player-balance";
 
 export class Player {
   id: string;

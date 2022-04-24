@@ -1,4 +1,4 @@
-import { DEFAULT_PLAYER_BALANCE } from "@shared/constants/default-player-balance";
+import { DEFAULT_PLAYER_BALANCE } from "@shared/modules/player/constants/default-player-balance";
 
 import { Player } from "./Player";
 import { CreatePlayerDTO } from "../dtos/create-player";
