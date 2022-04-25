@@ -40,6 +40,8 @@
       "@typescript-eslint/no-namespace": "off",
       "max-classes-per-file": "off",
       "consistent-return": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "no-return-await": "off",
       "import/extensions": [
         "error",
         "ignorePackages",

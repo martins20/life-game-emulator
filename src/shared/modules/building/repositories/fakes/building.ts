@@ -52,7 +52,7 @@ export class FakeBuildingRepository implements BuildingRepositoryContract {
 
     const propertyWithOwner = await this.findById(property_id);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    
     return propertyWithOwner!;
   }
 
@@ -67,7 +67,7 @@ export class FakeBuildingRepository implements BuildingRepositoryContract {
 
     const propertyWithoutOwner = await this.findById(property_id);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    
     return propertyWithoutOwner!;
   }
 }

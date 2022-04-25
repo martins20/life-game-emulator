@@ -12,6 +12,7 @@ import { CreateBoardDTO } from "../dtos/create-board";
 
 let sut: Sut;
 let player: Player;
+let playerTwo: Player;
 let building: Building;
 let fakeBoardRepository: FakeBoardRepository;
 let fakeBuildingRepository: FakeBuildingRepository;
@@ -28,12 +29,25 @@ describe("CreateBoardService", () => {
       fakeBuildingRepository
     );
 
-    player = await fakePlayerRepository.create({
+    const { id: playerOneId } = await fakePlayerRepository.create({
       name: "Jonh Doe",
     });
 
     player = await fakePlayerRepository.setPlayerCategory({
-      player_id: player.id,
+      player_id: playerOneId,
+      category: {
+        id: "some-category-id",
+        name: "some-category-name",
+        buyBuildingCondictionResponseCallback: jest.fn(),
+      },
+    });
+
+    const { id: playerTwoId } = await fakePlayerRepository.create({
+      name: "Jonh Doe",
+    });
+
+    playerTwo = await fakePlayerRepository.setPlayerCategory({
+      player_id: playerTwoId,
       category: {
         id: "some-category-id",
         name: "some-category-name",
@@ -54,9 +68,18 @@ describe("CreateBoardService", () => {
     ).rejects.toBeInstanceOf(BoardErrors.CannotCreateBoardWithoutPlayersError);
   });
 
+  it("Should not be able to create a new board with just one player", async () => {
+    await expect(
+      sut.execute({
+        player_ids: [player.id],
+        building_ids: [building.id],
+      })
+    ).rejects.toBeInstanceOf(BoardErrors.CannotCreateBoardWithOnePlayerError);
+  });
+
   it("Should not be able to create a new board without any buildings", async () => {
     await expect(
-      sut.execute({ player_ids: [player.id], building_ids: [] })
+      sut.execute({ player_ids: [player.id, playerTwo.id], building_ids: [] })
     ).rejects.toBeInstanceOf(
       BoardErrors.CannotCreateBoardWithoutBuildingsError
     );
@@ -65,7 +88,7 @@ describe("CreateBoardService", () => {
   it("Should not be able to create a new board with a non-existent player", async () => {
     await expect(
       sut.execute({
-        player_ids: ["non-existent-player-id"],
+        player_ids: ["non-existent-player-id", "non-existent-player-id-2"],
         building_ids: [building.id],
       })
     ).rejects.toBeInstanceOf(PlayerErrors.PlayersNotExistsError);
@@ -76,7 +99,7 @@ describe("CreateBoardService", () => {
 
     await expect(
       sut.execute({
-        player_ids: [player.id],
+        player_ids: [player.id, playerTwo.id],
         building_ids: [nonExistentBoardId],
       })
     ).rejects.toBeInstanceOf(BuildingErrors.BuildingsNotExistsError);
@@ -89,7 +112,7 @@ describe("CreateBoardService", () => {
 
     await expect(
       sut.execute({
-        player_ids: [playerWithoutCategory.id],
+        player_ids: [playerWithoutCategory.id, playerTwo.id],
         building_ids: [building.id],
       })
     ).rejects.toBeInstanceOf(
@@ -98,8 +121,21 @@ describe("CreateBoardService", () => {
   });
 
   it("Should be able to create a new board", async () => {
+    const { id } = await fakePlayerRepository.create({
+      name: "Jonh Tree",
+    });
+
+    const otherPlayer = await fakePlayerRepository.setPlayerCategory({
+      player_id: id,
+      category: {
+        id: "some-category-id",
+        name: "some-category-name",
+        buyBuildingCondictionResponseCallback: jest.fn(),
+      },
+    });
+
     const boardData: CreateBoardDTO = {
-      player_ids: [player.id],
+      player_ids: [player.id, otherPlayer.id],
       building_ids: [building.id],
     };
 
@@ -108,7 +144,7 @@ describe("CreateBoardService", () => {
     expect(board).toHaveProperty("id");
     expect(board).toMatchObject({
       buildings: [building],
-      players: [player],
+      players: expect.arrayContaining([player, otherPlayer]),
     });
   });
 });

@@ -10,6 +10,7 @@ import { Building } from "@shared/modules/building/entities/Building";
 import { CreateBuildingDTO } from "@shared/modules/building/dtos/create-building";
 
 let player: Player;
+let playerTwo: Player;
 let building: Building;
 let sutSpy: SutSpy;
 let server: SuperTest<Test>;
@@ -77,18 +78,19 @@ describe("CreateBoardController", () => {
     sutSpy = new SutSpy();
 
     player = await sutSpy.createPlayer(createPlayerData);
+    playerTwo = await sutSpy.createPlayer({ name: "Jonh Tree'" });
     building = await sutSpy.createBuilding(createBuildingData);
   });
 
   it("/POST - Should be able to create a new board", async () => {
     const { status, body } = await sutSpy.executeSUT({
       building_ids: [building.id],
-      player_ids: [player.id],
+      player_ids: [player.id, playerTwo.id],
     });
 
     expect(status).toBe(201);
     expect(body).toMatchObject({
-      players: [player],
+      players: expect.arrayContaining([player, playerTwo]),
       buildings: [building],
     });
   });
@@ -96,12 +98,12 @@ describe("CreateBoardController", () => {
   it("/POST - Should not be able to create a new board with a non-existing player", async () => {
     const { status, body } = await sutSpy.executeSUT({
       building_ids: [building.id],
-      player_ids: ["non-existent-player"],
+      player_ids: ["non-existent-player", "non-existent-player-2"],
     });
 
     expect(status).toBe(404);
     expect(body).toMatchObject({
-      message: "Players [non-existent-player] not exists",
+      message: "Players [non-existent-player,non-existent-player-2] not exists",
     });
   });
 
@@ -110,7 +112,7 @@ describe("CreateBoardController", () => {
 
     const { status, body } = await sutSpy.executeSUT({
       building_ids: [nonExistentBuildingId],
-      player_ids: [player.id],
+      player_ids: [player.id, playerTwo.id],
     });
 
     expect(status).toBe(404);
@@ -122,12 +124,24 @@ describe("CreateBoardController", () => {
   it("/POST - Should not be able to create a new board with an empty building_ids", async () => {
     const { status, body } = await sutSpy.executeSUT({
       building_ids: [],
-      player_ids: [player.id],
+      player_ids: [player.id, playerTwo.id],
     });
 
     expect(status).toBe(400);
     expect(body).toMatchObject({
       message: "Cannot create board without buildings.",
+    });
+  });
+
+  it("/POST - Should not be able to create a new board with one player", async () => {
+    const { status, body } = await sutSpy.executeSUT({
+      building_ids: [building.id],
+      player_ids: [player.id],
+    });
+
+    expect(status).toBe(400);
+    expect(body).toMatchObject({
+      message: "Cannot create board with just one player.",
     });
   });
 

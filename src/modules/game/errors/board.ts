@@ -9,6 +9,14 @@ export namespace BoardErrors {
     }
   }
 
+  export class CannotCreateBoardWithOnePlayerError extends ApiError {
+    constructor() {
+      const message = "Cannot create board with just one player.";
+
+      super(message);
+    }
+  }
+
   export class CannotCreateBoardWithoutBuildingsError extends ApiError {
     constructor() {
       const message = "Cannot create board without buildings.";

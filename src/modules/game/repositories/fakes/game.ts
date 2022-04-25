@@ -36,7 +36,6 @@ export class FakeGameRepository implements GameRepositoryContract {
 
     const updatedGame = await this.findById(game_id);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return updatedGame!;
   }
 }

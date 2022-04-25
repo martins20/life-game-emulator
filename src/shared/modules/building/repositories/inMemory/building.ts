@@ -4,7 +4,7 @@ import { RemoveBuildingOwnerDTO } from "@shared/modules/building/dtos/remove-bui
 import { CreateBuildingDTO } from "@shared/modules/building/dtos/create-building";
 
 import { BuildingRepositoryContract } from "../contract/building-repository";
-import { GenerateBuildingDataWithRandomRentAndSaleCostValuesHelper } from "../../helpers/generate-building-data-with-random-rent-and-sale-cost-values";
+import { generateBuildingDataWithRandomRentAndSaleCostValuesHelper } from "../../helpers/generate-building-data-with-random-rent-and-sale-cost-values";
 import { MAX_GAME_BUILDINGS } from "../../constants/max-game-buildings";
 
 export class InMemoryBuildingRepository implements BuildingRepositoryContract {
@@ -16,7 +16,7 @@ export class InMemoryBuildingRepository implements BuildingRepositoryContract {
     await Promise.all(
       Array.from({ length: MAX_GAME_BUILDINGS }).map((_, index) =>
         this.create(
-          GenerateBuildingDataWithRandomRentAndSaleCostValuesHelper(
+          generateBuildingDataWithRandomRentAndSaleCostValuesHelper(
             `Building ${index + 1}`
           )
         )
@@ -68,7 +68,6 @@ export class InMemoryBuildingRepository implements BuildingRepositoryContract {
 
     const propertyWithOwner = await this.findById(property_id);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return propertyWithOwner!;
   }
 
@@ -83,7 +82,6 @@ export class InMemoryBuildingRepository implements BuildingRepositoryContract {
 
     const propertyWithoutOwner = await this.findById(property_id);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return propertyWithoutOwner!;
   }
 }

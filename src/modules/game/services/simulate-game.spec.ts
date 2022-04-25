@@ -4,6 +4,7 @@ import { CreatePlayerDTO } from "@shared/modules/player/dtos/create-player";
 import { FakeBuildingRepository } from "@shared/modules/building/repositories/fakes/building";
 import { Building } from "@shared/modules/building/entities/Building";
 import { CreateBuildingDTO } from "@shared/modules/building/dtos/create-building";
+import { MAX_GAME_BUILDINGS } from "@shared/modules/building/constants/max-game-buildings";
 
 import { SimulateGameService as Sut } from "./simulate-game";
 import { FakeGameRepository } from "../repositories/fakes/game";
@@ -21,21 +22,34 @@ let fakeBoardRepository: FakeBoardRepository;
 let fakePlayerRepository: FakePlayerRepository;
 let fakeBuildingRepository: FakeBuildingRepository;
 
-const playerName = "Player name";
+const playerOneName = "Player One name";
+const playerTwoName = "Player Two name";
 const buildingName = "some building name";
 
-const mockCategoryCallback = jest.fn();
+const mockCategoryForPlayerOneCallback = jest.fn(() => false);
+const mockCategoryForPlayerTwoCallback = jest.fn(() => false);
+
+jest.mock("@modules/game/constants/max-game-rounds", () => ({
+  MAX_GAME_ROUNDS: 10,
+}));
+
+jest.mock("@shared/modules/building/constants/max-game-buildings", () => ({
+  MAX_GAME_BUILDINGS: 2,
+}));
 
 class SutSpy {
-  async createPlayer(data: CreatePlayerDTO): Promise<Player> {
-    const { id } = await fakePlayerRepository.create(data);
+  async createPlayer({ name }: CreatePlayerDTO): Promise<Player> {
+    const { id } = await fakePlayerRepository.create({ name });
 
     const player = await fakePlayerRepository.setPlayerCategory({
       player_id: id,
       category: {
         id: "some-category-id",
         name: "some-category-name",
-        buyBuildingCondictionResponseCallback: mockCategoryCallback,
+        buyBuildingCondictionResponseCallback:
+          name === playerOneName
+            ? mockCategoryForPlayerOneCallback
+            : mockCategoryForPlayerTwoCallback,
       },
     });
 
@@ -61,7 +75,7 @@ class SutSpy {
   }
 
   async makeGameWithOnePlayer(): Promise<Game> {
-    const player = await sutSpy.createPlayer({ name: playerName });
+    const player = await sutSpy.createPlayer({ name: playerOneName });
     const building = await sutSpy.createBuilding({
       name: buildingName,
       rent_cost: 10,
@@ -81,8 +95,8 @@ class SutSpy {
   }
 
   async makeFinishedGame(): Promise<Game> {
-    const playerOne = await sutSpy.createPlayer({ name: playerName });
-    const playerTwo = await sutSpy.createPlayer({ name: `${playerName} 2` });
+    const playerOne = await sutSpy.createPlayer({ name: playerOneName });
+    const playerTwo = await sutSpy.createPlayer({ name: `${playerOneName} 2` });
     const building = await sutSpy.createBuilding({
       name: buildingName,
       rent_cost: 10,
@@ -99,6 +113,32 @@ class SutSpy {
     });
 
     const game = await fakeGameRepository.finishGame(id);
+
+    return game;
+  }
+
+  async makeValidGame(): Promise<Game> {
+    const playerOne = await sutSpy.createPlayer({ name: playerOneName });
+    const playerTwo = await sutSpy.createPlayer({ name: playerTwoName });
+
+    const buildings = await Promise.all(
+      Array.from({ length: MAX_GAME_BUILDINGS }).map((_, index) =>
+        this.createBuilding({
+          name: `Building ${index + 1}`,
+          rent_cost: 150,
+          sale_cost: 100,
+        })
+      )
+    );
+
+    const board = await sutSpy.createBoard({
+      players: [playerOne, playerTwo],
+      buildings,
+    });
+
+    const game = await this.createGame({
+      board,
+    });
 
     return game;
   }
@@ -127,16 +167,6 @@ describe("SimulateGameService", () => {
     ).rejects.toBeInstanceOf(GameErrors.GameNotExistsError);
   });
 
-  it("Should not be able to simulate a game with one player", async () => {
-    const gameWithOnePlayer = await sutSpy.makeGameWithOnePlayer();
-
-    await expect(
-      sut.execute({
-        game_id: gameWithOnePlayer.id,
-      })
-    ).rejects.toBeInstanceOf(GameErrors.CannotSimulateGameWithOnePlayerError);
-  });
-
   it("Should not be able to simulate a finished game", async () => {
     const finishedGame = await sutSpy.makeFinishedGame();
 
@@ -145,5 +175,33 @@ describe("SimulateGameService", () => {
         game_id: finishedGame.id,
       })
     ).rejects.toBeInstanceOf(GameErrors.CannotSimulateFinishedGameError);
+  });
+
+  it(`Should be able to simulate a game with the winner equals to '${playerOneName}'`, async () => {
+    mockCategoryForPlayerOneCallback.mockImplementation(() => true);
+    mockCategoryForPlayerTwoCallback.mockImplementation(() => false);
+
+    const game = await sutSpy.makeValidGame();
+
+    const { players, winner } = await sut.execute({
+      game_id: game.id,
+    });
+
+    expect(winner).toBe(playerOneName);
+    expect(players).toEqual([playerOneName, playerTwoName]);
+  });
+
+  it(`Should be able to simulate a game with the winner equals to '${playerTwoName}'`, async () => {
+    mockCategoryForPlayerOneCallback.mockImplementation(() => false);
+    mockCategoryForPlayerTwoCallback.mockImplementation(() => true);
+
+    const game = await sutSpy.makeValidGame();
+
+    const { players, winner } = await sut.execute({
+      game_id: game.id,
+    });
+
+    expect(winner).toBe(playerTwoName);
+    expect(players).toEqual([playerTwoName, playerOneName]);
   });
 });

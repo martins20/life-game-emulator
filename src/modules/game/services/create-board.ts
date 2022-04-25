@@ -6,6 +6,7 @@ import { Player } from "@shared/modules/player/entities/Player";
 import { BuildingRepositoryContract } from "@shared/modules/building/repositories/contract/building-repository";
 import { BuildingErrors } from "@shared/modules/building/errors/building";
 import { Building } from "@shared/modules/building/entities/Building";
+import { pickRandomOrderOfPlayersHelper } from "@shared/helpers/pick-random-order-of-players";
 
 import { BoardRepositoryContract } from "../repositories/contract/board-repository";
 import { BoardErrors } from "../errors/board";
@@ -94,6 +95,11 @@ export class CreateBoardService {
     if (!hasBoardPlayers)
       throw new BoardErrors.CannotCreateBoardWithoutPlayersError();
 
+    const hasMoreThanOnePlayer = data.player_ids.length > 1;
+
+    if (!hasMoreThanOnePlayer)
+      throw new BoardErrors.CannotCreateBoardWithOnePlayerError();
+
     if (!hasBoardBuildings)
       throw new BoardErrors.CannotCreateBoardWithoutBuildingsError();
 
@@ -113,18 +119,22 @@ export class CreateBoardService {
     this.checkHasNotFoundBuildings(foundBuildings, data.player_ids);
 
     const isEveryPlayerWithSomeCategory = foundPlayers.every(
-      (data) => data?.category
+      (data) => data!.category
     );
 
     if (!isEveryPlayerWithSomeCategory)
       throw new BoardErrors.CannotCreateBoardWithPlayerWithoutCategoryError(
         foundPlayers
-          .filter((data) => !data?.category)
+          .filter((data) => !data!.category)
           .map((player) => player!.id)
       );
 
-    const board = this.boardsRepository.create({
-      players: foundPlayers as Player[],
+    const suffledPlayers = pickRandomOrderOfPlayersHelper(
+      foundPlayers as Player[]
+    );
+
+    const board = await this.boardsRepository.create({
+      players: suffledPlayers,
       buildings: foundBuildings as Building[],
     });
 

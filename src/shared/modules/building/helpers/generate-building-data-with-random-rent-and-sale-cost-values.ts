@@ -7,13 +7,13 @@ function getRandomNumber(): number {
   return randomNumber;
 }
 
-export function GenerateBuildingDataWithRandomRentAndSaleCostValuesHelper(
+export function generateBuildingDataWithRandomRentAndSaleCostValuesHelper(
   buildingName: Building["name"]
 ): CreateBuildingDTO {
   const buildingData: CreateBuildingDTO = {
     name: buildingName,
-    rent_cost: getRandomNumber(),
-    sale_cost: getRandomNumber(),
+    rent_cost: getRandomNumber() + 1,
+    sale_cost: getRandomNumber() + 1,
   };
 
   return buildingData;

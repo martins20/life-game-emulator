@@ -51,7 +51,6 @@ export class FakePlayerRepository implements PlayerRepositoryContract {
 
     const updatedPlayer = await this.findById(player_id);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return updatedPlayer!;
   }
 
@@ -67,7 +66,6 @@ export class FakePlayerRepository implements PlayerRepositoryContract {
 
     const updatedPlayer = await this.findById(player_id);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return updatedPlayer!;
   }
 
@@ -89,7 +87,6 @@ export class FakePlayerRepository implements PlayerRepositoryContract {
 
     const updatedPlayer = await this.findById(player_id);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return updatedPlayer!;
   }
 
@@ -110,7 +107,6 @@ export class FakePlayerRepository implements PlayerRepositoryContract {
 
     const updatedPlayer = await this.findById(player_id);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return updatedPlayer!;
   }
 }

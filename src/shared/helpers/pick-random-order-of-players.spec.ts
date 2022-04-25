@@ -1,8 +1,6 @@
 import { Player } from "@shared/modules/player/entities/Player";
 
-import { PickRandomOrderOfPlayersService as SUT } from "./pick-random-order-of-players";
-
-let sut: SUT;
+import { pickRandomOrderOfPlayersHelper as sut } from "./pick-random-order-of-players";
 
 const makeRandomPlayers = (): Player[] => {
   const players = Array.from({ length: Math.floor(Math.random() * 2) + 2 }).map(
@@ -19,15 +17,11 @@ const makeRandomPlayers = (): Player[] => {
   return players;
 };
 
-describe("PickRandomOrderOfPlayersService", () => {
-  beforeEach(() => {
-    sut = new SUT();
-  });
-
+describe("PickRandomOrderOfPlayersHelper", () => {
   const players: Player[] = makeRandomPlayers();
 
   it("Should return a random player order list.", () => {
-    const randomPlayerOrder = sut.execute(players);
+    const randomPlayerOrder = sut(players);
 
     expect(randomPlayerOrder).not.toEqual(players);
   });
@@ -37,7 +31,7 @@ describe("PickRandomOrderOfPlayersService", () => {
     global.Array.prototype.every = mockEvery;
 
     mockEvery.mockImplementationOnce(() => true);
-    sut.execute(players);
+    sut(players);
 
     expect(mockEvery).toHaveBeenCalledTimes(2);
   });

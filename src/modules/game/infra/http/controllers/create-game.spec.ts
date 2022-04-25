@@ -91,10 +91,11 @@ describe("CreateBoardController", () => {
     sutSpy = new SutSpy();
 
     const player = await sutSpy.createPlayer(createPlayerData);
+    const playerTwo = await sutSpy.createPlayer({ name: "Jonh Tree" });
     const building = await sutSpy.createBuilding(createBuildingData);
 
     board = await sutSpy.createBoard({
-      player_ids: [player.id],
+      player_ids: [player.id, playerTwo.id],
       building_ids: [building.id],
     });
   });
