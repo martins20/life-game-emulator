@@ -264,7 +264,7 @@
         }
       }
     },
-    "/board": {
+    "/boards": {
       "post": {
         "tags": ["Boards"],
         "summary": "Create a new board",
@@ -373,6 +373,154 @@
           },
           "404": {
             "description": "Buildings [${property_ids}] not exists <br/><br/>Players [${player_ids}] not exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/game": {
+      "post": {
+        "tags": ["Game"],
+        "summary": "Create a new game",
+        "description": "This request will creates a new game",
+        "produces": ["application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "board_id": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              },
+              "example": {
+                "board_id": "some-board-id"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Return the created game.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "round": {
+                        "type": "string"
+                      },
+                      "max_rounds": {
+                        "type": "number"
+                      },
+                      "is_game_finished": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Board not Exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/game/simulate": {
+      "post": {
+        "tags": ["Game"],
+        "summary": "Simulate a game",
+        "description": "This request will simulate an existent game",
+        "produces": ["application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "game_id": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              },
+              "example": {
+                "game_id": "some-game-id"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return the created game.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "winner": {
+                      "type": "string"
+                    },
+                    "players": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Cannot simulate a finished game.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Game not Exists.",
             "content": {
               "application/json": {
                 "schema": {

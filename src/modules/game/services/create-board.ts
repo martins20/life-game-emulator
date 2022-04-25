@@ -119,8 +119,6 @@ export class CreateBoardService {
     this.checkHasNotFoundPlayers(foundPlayers, data.player_ids);
     this.checkHasNotFoundBuildings(foundBuildings, data.player_ids);
 
-    // BoardMustHaveMaxBuildingsError
-
     const isBoardWithMaxBuildings =
       foundBuildings.length === MAX_GAME_BUILDINGS;
 
