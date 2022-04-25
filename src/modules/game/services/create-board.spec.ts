@@ -14,9 +14,14 @@ let sut: Sut;
 let player: Player;
 let playerTwo: Player;
 let building: Building;
+let buildingTwo: Building;
 let fakeBoardRepository: FakeBoardRepository;
 let fakeBuildingRepository: FakeBuildingRepository;
 let fakePlayerRepository: FakePlayerRepository;
+
+jest.mock("@shared/modules/building/constants/max-game-buildings", () => ({
+  MAX_GAME_BUILDINGS: 2,
+}));
 
 describe("CreateBoardService", () => {
   beforeEach(async () => {
@@ -60,11 +65,20 @@ describe("CreateBoardService", () => {
       rent_cost: 50,
       sale_cost: 100,
     });
+
+    buildingTwo = await fakeBuildingRepository.create({
+      name: "Doe's house two",
+      rent_cost: 50,
+      sale_cost: 100,
+    });
   });
 
   it("Should not be able to create a new board without any player", async () => {
     await expect(
-      sut.execute({ player_ids: [], building_ids: [building.id] })
+      sut.execute({
+        player_ids: [],
+        building_ids: [building.id, buildingTwo.id],
+      })
     ).rejects.toBeInstanceOf(BoardErrors.CannotCreateBoardWithoutPlayersError);
   });
 
@@ -72,7 +86,7 @@ describe("CreateBoardService", () => {
     await expect(
       sut.execute({
         player_ids: [player.id],
-        building_ids: [building.id],
+        building_ids: [building.id, buildingTwo.id],
       })
     ).rejects.toBeInstanceOf(BoardErrors.CannotCreateBoardWithOnePlayerError);
   });
@@ -89,7 +103,7 @@ describe("CreateBoardService", () => {
     await expect(
       sut.execute({
         player_ids: ["non-existent-player-id", "non-existent-player-id-2"],
-        building_ids: [building.id],
+        building_ids: [building.id, buildingTwo.id],
       })
     ).rejects.toBeInstanceOf(PlayerErrors.PlayersNotExistsError);
   });
@@ -113,11 +127,20 @@ describe("CreateBoardService", () => {
     await expect(
       sut.execute({
         player_ids: [playerWithoutCategory.id, playerTwo.id],
-        building_ids: [building.id],
+        building_ids: [building.id, buildingTwo.id],
       })
     ).rejects.toBeInstanceOf(
       BoardErrors.CannotCreateBoardWithPlayerWithoutCategoryError
     );
+  });
+
+  it("Should not be able to create a new board without max board buldings quantity", async () => {
+    await expect(
+      sut.execute({
+        player_ids: [player.id, playerTwo.id],
+        building_ids: [building.id],
+      })
+    ).rejects.toBeInstanceOf(BoardErrors.BoardMustHaveMaxBuildingsError);
   });
 
   it("Should be able to create a new board", async () => {
@@ -136,14 +159,14 @@ describe("CreateBoardService", () => {
 
     const boardData: CreateBoardDTO = {
       player_ids: [player.id, otherPlayer.id],
-      building_ids: [building.id],
+      building_ids: [building.id, buildingTwo.id],
     };
 
     const board = await sut.execute(boardData);
 
     expect(board).toHaveProperty("id");
     expect(board).toMatchObject({
-      buildings: [building],
+      buildings: [building, buildingTwo],
       players: expect.arrayContaining([player, otherPlayer]),
     });
   });

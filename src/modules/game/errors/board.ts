@@ -41,4 +41,11 @@ export namespace BoardErrors {
       super(message);
     }
   }
+  export class BoardMustHaveMaxBuildingsError extends ApiError {
+    constructor(quantity: number) {
+      const message = `Board must have ${quantity} builds quantity.`;
+
+      super(message);
+    }
+  }
 }

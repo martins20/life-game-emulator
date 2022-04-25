@@ -6,6 +6,7 @@ import { Player } from "@shared/modules/player/entities/Player";
 import { BuildingRepositoryContract } from "@shared/modules/building/repositories/contract/building-repository";
 import { BuildingErrors } from "@shared/modules/building/errors/building";
 import { Building } from "@shared/modules/building/entities/Building";
+import { MAX_GAME_BUILDINGS } from "@shared/modules/building/constants/max-game-buildings";
 import { pickRandomOrderOfPlayersHelper } from "@shared/helpers/pick-random-order-of-players";
 
 import { BoardRepositoryContract } from "../repositories/contract/board-repository";
@@ -117,6 +118,14 @@ export class CreateBoardService {
 
     this.checkHasNotFoundPlayers(foundPlayers, data.player_ids);
     this.checkHasNotFoundBuildings(foundBuildings, data.player_ids);
+
+    // BoardMustHaveMaxBuildingsError
+
+    const isBoardWithMaxBuildings =
+      foundBuildings.length === MAX_GAME_BUILDINGS;
+
+    if (!isBoardWithMaxBuildings)
+      throw new BoardErrors.BoardMustHaveMaxBuildingsError(MAX_GAME_BUILDINGS);
 
     const isEveryPlayerWithSomeCategory = foundPlayers.every(
       (data) => data!.category

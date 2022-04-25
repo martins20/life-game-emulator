@@ -8,10 +8,11 @@ import { SetPlayerCategoryDTO } from "@shared/modules/player/dtos/set-player-cat
 import { CreatePlayerDTO } from "@shared/modules/player/dtos/create-player";
 import { Building } from "@shared/modules/building/entities/Building";
 import { CreateBuildingDTO } from "@shared/modules/building/dtos/create-building";
+import { MAX_GAME_BUILDINGS } from "@shared/modules/building/constants/max-game-buildings";
 
 let player: Player;
 let playerTwo: Player;
-let building: Building;
+let buildings: Building[];
 let sutSpy: SutSpy;
 let server: SuperTest<Test>;
 
@@ -79,25 +80,44 @@ describe("CreateBoardController", () => {
 
     player = await sutSpy.createPlayer(createPlayerData);
     playerTwo = await sutSpy.createPlayer({ name: "Jonh Tree'" });
-    building = await sutSpy.createBuilding(createBuildingData);
+    buildings = await Promise.all(
+      Array.from({ length: MAX_GAME_BUILDINGS }).map((_, index) =>
+        sutSpy.createBuilding({
+          ...createBuildingData,
+          name: `Doe's house ${index + 1}`,
+        })
+      )
+    );
   });
 
   it("/POST - Should be able to create a new board", async () => {
     const { status, body } = await sutSpy.executeSUT({
-      building_ids: [building.id],
+      building_ids: buildings.map((data) => data.id),
       player_ids: [player.id, playerTwo.id],
     });
 
     expect(status).toBe(201);
     expect(body).toMatchObject({
       players: expect.arrayContaining([player, playerTwo]),
-      buildings: [building],
+      buildings,
     });
   });
 
   it("/POST - Should not be able to create a new board with a non-existing player", async () => {
     const { status, body } = await sutSpy.executeSUT({
-      building_ids: [building.id],
+      building_ids: buildings.map((data) => data.id),
+      player_ids: ["non-existent-player", "non-existent-player-2"],
+    });
+
+    expect(status).toBe(404);
+    expect(body).toMatchObject({
+      message: "Players [non-existent-player,non-existent-player-2] not exists",
+    });
+  });
+
+  it("/POST - Should not be able to create a new board with  less than max buildings", async () => {
+    const { status, body } = await sutSpy.executeSUT({
+      building_ids: [buildings[0].id],
       player_ids: ["non-existent-player", "non-existent-player-2"],
     });
 
@@ -135,7 +155,7 @@ describe("CreateBoardController", () => {
 
   it("/POST - Should not be able to create a new board with one player", async () => {
     const { status, body } = await sutSpy.executeSUT({
-      building_ids: [building.id],
+      building_ids: buildings.map((data) => data.id),
       player_ids: [player.id],
     });
 
@@ -147,7 +167,7 @@ describe("CreateBoardController", () => {
 
   it("/POST - Should not be able to create a new board with an empty player_ids", async () => {
     const { status, body } = await sutSpy.executeSUT({
-      building_ids: [building.id],
+      building_ids: buildings.map((data) => data.id),
       player_ids: [],
     });
 

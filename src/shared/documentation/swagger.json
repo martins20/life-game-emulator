@@ -357,7 +357,7 @@
             }
           },
           "400": {
-            "description": "Cannot create board without players. <br/><br/>Cannot create board with just one player. <br/><br/>Cannot create board without buildings. <br/><br/>Cannot create board with players [${player_ids}] without a category.",
+            "description": "Cannot create board without players. <br/><br/>Cannot create board with just one player. <br/><br/>Cannot create board without buildings. <br/><br/>Cannot create board with players [${player_ids}] without a category. <br/><br/>Board must have ${quantity} builds quantity.",
             "content": {
               "application/json": {
                 "schema": {

@@ -41,4 +41,13 @@ describe("BoardErrors", () => {
       expect(error.statusCode).toBe(400);
     }
   });
+
+  it("Should to return a error message 'Board must have 20 builds quantity.' status code equals to 400", () => {
+    try {
+      throw new BoardErrors.BoardMustHaveMaxBuildingsError(20);
+    } catch (error: any) {
+      expect(error.message).toBe("Board must have 20 builds quantity.");
+      expect(error.statusCode).toBe(400);
+    }
+  });
 });

@@ -11,6 +11,7 @@ import { SetPlayerCategoryDTO } from "@shared/modules/player/dtos/set-player-cat
 import { CreatePlayerDTO } from "@shared/modules/player/dtos/create-player";
 import { Building } from "@shared/modules/building/entities/Building";
 import { CreateBuildingDTO } from "@shared/modules/building/dtos/create-building";
+import { MAX_GAME_BUILDINGS } from "@shared/modules/building/constants/max-game-buildings";
 
 let board: Board;
 
@@ -92,11 +93,18 @@ describe("CreateBoardController", () => {
 
     const player = await sutSpy.createPlayer(createPlayerData);
     const playerTwo = await sutSpy.createPlayer({ name: "Jonh Tree" });
-    const building = await sutSpy.createBuilding(createBuildingData);
+    const buildings = await Promise.all(
+      Array.from({ length: MAX_GAME_BUILDINGS }).map((_, index) =>
+        sutSpy.createBuilding({
+          ...createBuildingData,
+          name: `Doe's house ${index + 1}`,
+        })
+      )
+    );
 
     board = await sutSpy.createBoard({
       player_ids: [player.id, playerTwo.id],
-      building_ids: [building.id],
+      building_ids: buildings.map((data) => data.id),
     });
   });
 
