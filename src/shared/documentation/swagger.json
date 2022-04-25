@@ -1,0 +1,184 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Documentation of life game emulator api",
+    "version": "1.0.0",
+    "title": "Life game emulator - api",
+    "contact": {
+      "email": "martins20.tech@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333",
+      "description": "Local"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Players",
+      "description": "Player of game emulator."
+    }
+  ],
+  "paths": {
+    "/players": {
+      "post": {
+        "tags": ["Players"],
+        "summary": "Create a new player",
+        "description": "This request will creates a new player",
+        "produces": ["application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              },
+              "example": {
+                "name": "John Doe"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Return the created player.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "balance": {
+                      "type": "number"
+                    },
+                    "position": {
+                      "type": "string"
+                    },
+                    "round": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Player already exists <br/><br/>Player name is required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/category": {
+      "put": {
+        "tags": ["Players"],
+        "summary": "Set a player category",
+        "description": "This request will set a player category",
+        "produces": ["application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "player_id": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "category_name": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              },
+              "example": {
+                "player_id": "some-id-here",
+                "category_name": "wary | random | impulsive | picky"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return the player with the selected category.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "balance": {
+                      "type": "number"
+                    },
+                    "category": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "buyBuildingCondictionResponseCallback": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "position": {
+                      "type": "string"
+                    },
+                    "round": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Player not exists <br/><br/>Player category not exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
