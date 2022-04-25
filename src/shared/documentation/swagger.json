@@ -18,6 +18,10 @@
     {
       "name": "Players",
       "description": "Player of game emulator."
+    },
+    {
+      "name": "Buildings",
+      "description": "Buildings of game emulator."
     }
   ],
   "paths": {
@@ -75,6 +79,86 @@
           },
           "400": {
             "description": "Player already exists <br/><br/>Player name is required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/buildings": {
+      "post": {
+        "tags": ["Buildings"],
+        "summary": "Create a new building",
+        "description": "This request will creates a new building",
+        "produces": ["application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "sale_cost": {
+                    "type": "number",
+                    "required": true
+                  },
+                  "rent_cost": {
+                    "type": "number",
+                    "required": true
+                  }
+                }
+              },
+              "example": {
+                "name": "Doe's house",
+                "sale_cost": 100,
+                "rent_cost": 150
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Return the created building.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "balance": {
+                      "type": "number"
+                    },
+                    "position": {
+                      "type": "string"
+                    },
+                    "round": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Building already exists <br/><br/>'sale_cost' must be greater than 0 <br/><br/>'rent_cost' must be greater than 0 <br/><br/>",
             "content": {
               "application/json": {
                 "schema": {
@@ -164,6 +248,131 @@
           },
           "404": {
             "description": "Player not exists <br/><br/>Player category not exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/board": {
+      "post": {
+        "tags": ["Boards"],
+        "summary": "Create a new board",
+        "description": "This request will creates a new board",
+        "produces": ["application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "sale_cost": {
+                    "type": "number",
+                    "required": true
+                  },
+                  "rent_cost": {
+                    "type": "number",
+                    "required": true
+                  }
+                }
+              },
+              "example": {
+                "name": "Doe's house",
+                "sale_cost": 100,
+                "rent_cost": 150
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Return the created board with suffled players.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "players": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "balance": {
+                            "type": "number"
+                          },
+                          "position": {
+                            "type": "string"
+                          },
+                          "round": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    },
+                    "buildings": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "sale_cost": {
+                            "type": "number",
+                            "required": true
+                          },
+                          "rent_cost": {
+                            "type": "number",
+                            "required": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Cannot create board without players. <br/><br/>Cannot create board with just one player. <br/><br/>Cannot create board without buildings. <br/><br/>Cannot create board with players [${player_ids}] without a category.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Buildings [${property_ids}] not exists <br/><br/>Players [${player_ids}] not exists",
             "content": {
               "application/json": {
                 "schema": {
