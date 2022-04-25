@@ -18,9 +18,17 @@ export namespace GameErrors {
     }
   }
 
-  export class CannotSimulateGameWithOnePlayer extends ApiError {
+  export class CannotSimulateGameWithOnePlayerError extends ApiError {
     constructor() {
       const message = "Cannot simulate a game with one player.";
+
+      super(message);
+    }
+  }
+
+  export class CannotSimulateFinishedGameError extends ApiError {
+    constructor() {
+      const message = "Cannot simulate a finished game.";
 
       super(message);
     }

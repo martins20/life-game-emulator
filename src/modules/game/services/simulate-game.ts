@@ -26,11 +26,15 @@ export class SimulateGameService {
     const foundGameById = await this.gamesRepository.findById(game_id);
 
     if (!foundGameById) throw new GameErrors.GameNotExistsError();
+    const { board, is_game_finished } = foundGameById;
 
-    const isGameWithMoreThanOnePlayer = foundGameById.board.players.length > 1;
+    const isGameWithMoreThanOnePlayer = board.players.length > 1;
 
     if (!isGameWithMoreThanOnePlayer)
-      throw new GameErrors.CannotSimulateGameWithOnePlayer();
+      throw new GameErrors.CannotSimulateGameWithOnePlayerError();
+
+    if (is_game_finished)
+      throw new GameErrors.CannotSimulateFinishedGameError();
 
     return {} as Game;
   }

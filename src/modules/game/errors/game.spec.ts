@@ -21,9 +21,18 @@ describe("GameErrors", () => {
 
   it("Should to return a error message 'Cannot simulate a game with one player.' status code equals to 400", () => {
     try {
-      throw new GameErrors.CannotSimulateGameWithOnePlayer();
+      throw new GameErrors.CannotSimulateGameWithOnePlayerError();
     } catch (error: any) {
       expect(error.message).toBe("Cannot simulate a game with one player.");
+      expect(error.statusCode).toBe(400);
+    }
+  });
+
+  it("Should to return a error message 'Cannot simulate a finished game.' status code equals to 400", () => {
+    try {
+      throw new GameErrors.CannotSimulateFinishedGameError();
+    } catch (error: any) {
+      expect(error.message).toBe("Cannot simulate a finished game.");
       expect(error.statusCode).toBe(400);
     }
   });

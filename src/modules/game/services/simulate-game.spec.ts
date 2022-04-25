@@ -79,6 +79,29 @@ class SutSpy {
 
     return gameWithOnePlayer;
   }
+
+  async makeFinishedGame(): Promise<Game> {
+    const playerOne = await sutSpy.createPlayer({ name: playerName });
+    const playerTwo = await sutSpy.createPlayer({ name: `${playerName} 2` });
+    const building = await sutSpy.createBuilding({
+      name: buildingName,
+      rent_cost: 10,
+      sale_cost: 100,
+    });
+
+    const board = await sutSpy.createBoard({
+      players: [playerOne, playerTwo],
+      buildings: [building],
+    });
+
+    const { id } = await this.createGame({
+      board,
+    });
+
+    const game = await fakeGameRepository.finishGame(id);
+
+    return game;
+  }
 }
 
 describe("SimulateGameService", () => {
@@ -111,6 +134,16 @@ describe("SimulateGameService", () => {
       sut.execute({
         game_id: gameWithOnePlayer.id,
       })
-    ).rejects.toBeInstanceOf(GameErrors.CannotSimulateGameWithOnePlayer);
+    ).rejects.toBeInstanceOf(GameErrors.CannotSimulateGameWithOnePlayerError);
+  });
+
+  it("Should not be able to simulate a finished game", async () => {
+    const finishedGame = await sutSpy.makeFinishedGame();
+
+    await expect(
+      sut.execute({
+        game_id: finishedGame.id,
+      })
+    ).rejects.toBeInstanceOf(GameErrors.CannotSimulateFinishedGameError);
   });
 });
