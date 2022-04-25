@@ -8,9 +8,11 @@ import { generateBuildingDataWithRandomRentAndSaleCostValuesHelper } from "../..
 import { MAX_GAME_BUILDINGS } from "../../constants/max-game-buildings";
 
 export class InMemoryBuildingRepository implements BuildingRepositoryContract {
-  constructor() {}
+  constructor() {
+    this.runSeeds();
+  }
 
-  private properties: Building[] = [];
+  private buildings: Building[] = [];
 
   async runSeeds() {
     await Promise.all(
@@ -28,10 +30,10 @@ export class InMemoryBuildingRepository implements BuildingRepositoryContract {
     const createdBuilding = new Building(data);
 
     Object.assign(createdBuilding, {
-      id: String(Date.now() * this.properties.length + 1),
+      id: String(Date.now() * this.buildings.length + 1),
     });
 
-    this.properties.push(createdBuilding);
+    this.buildings.push(createdBuilding);
 
     return createdBuilding;
   }
@@ -41,7 +43,7 @@ export class InMemoryBuildingRepository implements BuildingRepositoryContract {
   ): Promise<Building | undefined> {
     const lowerCaseName = name.toLocaleLowerCase();
 
-    const foundBuilding = this.properties.find(
+    const foundBuilding = this.buildings.find(
       (data) => data.name.toLocaleLowerCase() === lowerCaseName
     );
 
@@ -49,9 +51,7 @@ export class InMemoryBuildingRepository implements BuildingRepositoryContract {
   }
 
   async findById(propertyID: Building["id"]): Promise<Building | undefined> {
-    const foundBuilding = this.properties.find(
-      (data) => data.id === propertyID
-    );
+    const foundBuilding = this.buildings.find((data) => data.id === propertyID);
 
     return foundBuilding;
   }
@@ -60,11 +60,11 @@ export class InMemoryBuildingRepository implements BuildingRepositoryContract {
     property_id,
     owner,
   }: SetBuildingOwnerDTO): Promise<Building> {
-    const updatedBuildingWithOwner = this.properties.map((data) =>
+    const updatedBuildingWithOwner = this.buildings.map((data) =>
       data.id === property_id ? { ...data, owner } : data
     );
 
-    this.properties = updatedBuildingWithOwner;
+    this.buildings = updatedBuildingWithOwner;
 
     const propertyWithOwner = await this.findById(property_id);
 
@@ -74,14 +74,18 @@ export class InMemoryBuildingRepository implements BuildingRepositoryContract {
   async removeBuildingByOwner({
     property_id,
   }: RemoveBuildingOwnerDTO): Promise<Building> {
-    const updatedBuildingWithoutOwner = this.properties.map((data) =>
+    const updatedBuildingWithoutOwner = this.buildings.map((data) =>
       data.id === property_id ? { ...data, owner: null } : data
     );
 
-    this.properties = updatedBuildingWithoutOwner;
+    this.buildings = updatedBuildingWithoutOwner;
 
     const propertyWithoutOwner = await this.findById(property_id);
 
     return propertyWithoutOwner!;
+  }
+
+  async list(): Promise<Building[]> {
+    return this.buildings;
   }
 }

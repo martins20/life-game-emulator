@@ -181,14 +181,11 @@
                     "name": {
                       "type": "string"
                     },
-                    "balance": {
+                    "sale_cist": {
                       "type": "number"
                     },
-                    "position": {
+                    "rent_value": {
                       "type": "string"
-                    },
-                    "round": {
-                      "type": "number"
                     }
                   }
                 }
@@ -204,6 +201,41 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Buildings"],
+        "summary": "List all buildings",
+        "description": "This request will list all buildings",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Return the list of buildings.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "sale_cist": {
+                        "type": "number"
+                      },
+                      "rent_value": {
+                        "type": "string"
+                      }
                     }
                   }
                 }

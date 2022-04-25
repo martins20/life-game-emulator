@@ -2,17 +2,17 @@ import supertest, { SuperTest, Test } from "supertest";
 
 import { makeSuperTestRequest } from "@shared/test/helpers/make-supertest-request";
 import { api } from "@shared/Server";
-import { CreatePlayerDTO } from "@shared/modules/player/dtos/create-player";
+import { CreateBuildingDTO } from "@shared/modules/building/dtos/create-building";
 
 let server: SuperTest<Test>;
 let sutSpy: SutSpy;
 
 class SutSpy {
-  async createPlayer(data: CreatePlayerDTO) {
-    const { body } = await makeSuperTestRequest<CreatePlayerDTO>({
+  async createBuilding(data: CreateBuildingDTO) {
+    const { body } = await makeSuperTestRequest<CreateBuildingDTO>({
       api: server,
       method: "post",
-      path: "/players",
+      path: "/buildings",
       payload: data,
     });
 
@@ -23,29 +23,31 @@ class SutSpy {
     const response = await makeSuperTestRequest({
       api: server,
       method: "get",
-      path: "/players",
+      path: "/buildings",
     });
 
     return response;
   }
 }
 
-describe("ListPlayersController", () => {
+describe("ListBuildingsController", () => {
   beforeAll(() => {
     server = supertest(api);
     sutSpy = new SutSpy();
   });
 
-  const createPlayerData: CreatePlayerDTO = {
-    name: "Jonh Doe",
+  const createBuildingData: CreateBuildingDTO = {
+    name: "Doe's House",
+    rent_cost: 100,
+    sale_cost: 150,
   };
 
-  it("/GET - Should be able to list all players", async () => {
-    const player = await sutSpy.createPlayer(createPlayerData);
+  it("/GET - Should be able to list all buildings", async () => {
+    const building = await sutSpy.createBuilding(createBuildingData);
 
     const { status, body } = await sutSpy.executeSUT();
 
     expect(status).toBe(200);
-    expect(body).toMatchObject([player]);
+    expect(body).toMatchObject([building]);
   });
 });

@@ -9,4 +9,5 @@ export interface BuildingRepositoryContract {
   findById: (propertyID: Building["id"]) => Promise<Building | undefined>;
   setBuildingOwner: (data: SetBuildingOwnerDTO) => Promise<Building>;
   removeBuildingByOwner: (data: RemoveBuildingOwnerDTO) => Promise<Building>;
+  list: () => Promise<Building[]>;
 }

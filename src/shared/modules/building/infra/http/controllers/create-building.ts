@@ -1,7 +1,7 @@
 import { container } from "tsyringe";
 import { Response, Request } from "express";
 
-import { CreateBuildingService } from "@shared/modules/building/service/create-building";
+import { CreateBuildingService } from "@shared/modules/building/services/create-building";
 import { CreateBuildingDTO } from "@shared/modules/building/dtos/create-building";
 
 export class CreateBuildingController {
