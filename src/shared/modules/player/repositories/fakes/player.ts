@@ -109,4 +109,8 @@ export class FakePlayerRepository implements PlayerRepositoryContract {
 
     return updatedPlayer!;
   }
+
+  async list(): Promise<Player[]> {
+    return this.players;
+  }
 }

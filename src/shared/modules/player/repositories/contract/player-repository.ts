@@ -14,4 +14,5 @@ export interface PlayerRepositoryContract {
   decreasePlayerBalance: (data: DecreasePlayerBalanceDTO) => Promise<Player>;
   moveForward: (data: MovePlayerForwardDTO) => Promise<Player>;
   setPlayerCategory: (data: UpdatePlayerCategoryDTO) => Promise<Player>;
+  list: () => Promise<Player[]>;
 }

@@ -32,8 +32,8 @@ class Server {
   }
 
   private middlewares(): void {
-    this.api.use(cors());
     this.api.use(express.json());
+    this.api.use(cors());
 
     this.api.use(
       "/documentation",

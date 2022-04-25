@@ -93,6 +93,44 @@
             }
           }
         }
+      },
+      "get": {
+        "tags": ["Players"],
+        "summary": "List all players",
+        "description": "This request will list all storaged players",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Return the list of players player.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "balance": {
+                        "type": "number"
+                      },
+                      "position": {
+                        "type": "string"
+                      },
+                      "round": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/buildings": {
