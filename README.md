@@ -23,6 +23,6 @@ For run the project the machine must have installed the following packages.
 
 ## Next Steps
 
-- [] Refactor game simulator service.
+- [ ] Refactor game simulator service.
 
 ### Project made with ❤️ by [martins20](https://github.com/martins20)
