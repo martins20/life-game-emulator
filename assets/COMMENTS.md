@@ -22,4 +22,5 @@ So, basically if you want to build the project into your machine run the followi
 ```shell
 yarn build # => or npm run build
 ```
-> The api documentation is in the route /documentation
+
+The api documentation is in the route /documentation
